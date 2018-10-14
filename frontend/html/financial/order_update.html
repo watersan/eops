@@ -1,0 +1,259 @@
+<!--订单管理  ->  修改订单-->
+<div class="row">
+    <div class="col-md-9">
+        <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">订单修改</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" name="orderForm">
+              <div class="box-body">
+                <div class="form-group" ng-class="{'has-success':!orderForm.orderName.$invalid,'has-warning':orderForm.orderName.$error.required}">
+                    <label class="col-sm-2 control-label">订单名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text"  name="orderName" class="form-control input-sm" placeholder="请输入订单名称" required  ng-model="order.orderName" >
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="orderForm.orderName.$error.required"><i class="fa fa-bell-o"></i>请输入订单名称</span>
+                                <span class="help-block" ng-show="!orderForm.orderName.$invalid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!orderForm.productName.$invalid,'has-warning':orderForm.productName.$error.required}">
+                    <label class="col-sm-2 control-label">产品名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" name="productName" class="form-control input-sm" placeholder="请输入产品名称" required  ng-model="order.productName">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="orderForm.productName.$error.required"><i class="fa fa-bell-o"></i>请输入产品名称</span>
+                                <span class="help-block" ng-show="!orderForm.productName.$invalid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!orderForm.directorName.$error.required,'has-warning':orderForm.directorName.$error.required}">
+                    <label class="col-sm-2 control-label">负责人名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <select name="directorName" class="form-control input-sm" required ng-model="order.directorName">
+                                    <option value="">请选择</option>
+                                    <option value="{{user.trueName}}({{user.id}})" ng-bind="user.trueName" ng-repeat="user in userlist"></option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="orderForm.directorName.$error.required"><i class="fa fa-bell-o"></i>请选择负责人</span>
+                                <span class="help-block" ng-show="!orderForm.directorName.$error.required"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!orderForm.cooperateName.$invalid,'has-warning':orderForm.cooperateName.$error.required}">
+                    <label class="col-sm-2 control-label">接入来源</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" name="cooperateName" class="form-control input-sm" placeholder="请输入接入来源" required ng-model="order.cooperateName">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="orderForm.cooperateName.$error.required"><i class="fa fa-bell-o"></i>请输入接入来源</span>
+                                <span class="help-block" ng-show="!orderForm.cooperateName.$invalid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!orderForm.cpMain.$error.required,'has-warning':orderForm.cpMain.$error.required}">
+                    <label class="col-sm-2 control-label">签约主体</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <select name="cpMain" class="form-control input-sm" required ng-model="order.cpMain">
+                                    <option value="">请选择</option>
+                                    <option value="1">磨盘精准</option>
+                                    <option value="2">磨盘云讯</option>
+                                    <option value="3">中传佳讯</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="orderForm.cpMain.$error.required"><i class="fa fa-bell-o"></i>请选择签约主体</span>
+                                <span class="help-block" ng-show="!orderForm.cpMain.$error.required"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':orderForm.payUnit.$valid,'has-warning':!orderForm.payUnit.$valid}">
+                    <label class="col-sm-2 control-label">接入单价</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number" name="payUnit" class="form-control input-sm" placeholder="请输入接入单价"  required  ng-model="order.payUnit" ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!orderForm.payUnit.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="orderForm.payUnit.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">订单状态</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <select name="" class="form-control input-sm" required ng-model="order.status">
+                                    <option value="0">正常</option>
+                                    <option value="1">暂停</option>
+                                    <option value="2">删除</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':orderForm.advancePay.$valid,'has-warning':!orderForm.advancePay.$valid}">
+                    <label class="col-sm-2 control-label">预收款</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number" name="advancePay" class="form-control input-sm" placeholder="请输入预收款"  ng-model="order.advancePay" required ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!orderForm.advancePay.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="orderForm.advancePay.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!orderForm.orderType.$error.required,'has-warning':orderForm.orderType.$error.required}">
+                    <label class="col-sm-2 control-label">订单类型</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <select name="orderType" class="form-control input-sm" required ng-model="order.orderType">
+                                    <option value="">请选择</option>
+                                    <option value="1">Android</option>
+                                    <option value="2">Ios</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="orderForm.orderType.$error.required"><i class="fa fa-bell-o"></i>请选择订单类型</span>
+                                <span class="help-block" ng-show="!orderForm.orderType.$error.required"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!orderForm.beginend.$invalid,'has-warning':orderForm.beginend.$error.required}">
+                    <label class="col-sm-2 control-label">起止时间</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="daterange" name="beginend" class="form-control pull-right active input-sm" ng-model="dates4" required id="dates4" ranges="ranges">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="orderForm.beginend.$error.required"><i class="fa fa-bell-o"></i>请选择起止时间</span>
+                                <span class="help-block" ng-show="!orderForm.beginend.$invalid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 
+                <div class="form-group" ng-class="{'has-success':!orderForm.beginTime.$invalid,'has-warning':orderForm.beginTime.$error.required}">
+                    <label class="col-sm-2 control-label">开始时间</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input ui-date="begindateOptions" name="beginTime" class="form-control input-sm" required  ng-model="order.beginTime" ng-change="changeBeginTime(order.beginTime)">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="orderForm.beginTime.$error.required"><i class="fa fa-bell-o"></i>请选择开始时间</span>
+                                <span class="help-block" ng-show="!orderForm.beginTime.$invalid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- 
+                <div class="form-group" ng-class="{'has-success':!orderForm.endTime.$invalid,'has-warning':orderForm.endTime.$error.required}">
+                    <label class="col-sm-2 control-label">结束时间</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input ui-date="enddateOptions" name="endTime" class="form-control input-sm" required  ng-model="order.endTime" ng-change="changeEndTime(order.endTime)">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="orderForm.endTime.$error.required"><i class="fa fa-bell-o"></i>请选择开始时间</span>
+                                <span class="help-block" ng-show="!orderForm.endTime.$invalid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="form-group" ng-class="{'has-success':!orderForm.extendType.$error.required,'has-warning':orderForm.extendType.$error.required}">
+                    <label class="col-sm-2 control-label">推广类型</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <select name="extendType" class="form-control input-sm" required ng-model="order.extendType">
+                                    <option value="">请选择</option>
+                                    <option value="1">CPC</option>
+                                    <option value="2">CPA</option>
+                                    <option value="3">CPT</option>
+                                    <option value="4">冲榜</option>
+                                    <option value="5">CPD</option>
+                                    <option value="6">快速任务</option>
+                                    <option value="7">ASO</option>
+                                    <option value="8">CPS</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="orderForm.extendType.$error.required"><i class="fa fa-bell-o"></i>请选择推广类型</span>
+                                <span class="help-block" ng-show="!orderForm.extendType.$error.required"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!orderForm.relationId.$error.required,'has-warning':orderForm.relationId.$error.required}">
+                    <label class="col-sm-2 control-label">关联活动</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <select name="relationId" class="form-control input-sm" required ng-model="order.relationId">
+                                    <option value="">请选择</option>
+                                    <option value="{{adv.oldmopanid}}" ng-bind="adv.cpaname" ng-repeat="adv in advlist"></option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="orderForm.relationId.$error.required"><i class="fa fa-bell-o"></i>请选择关联活动</span>
+                                <span class="help-block" ng-show="!orderForm.relationId.$error.required"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">备注</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <textarea rows="5" cols="60" placeholder="备注信息" class="form-control input-sm" ng-model="order.remark"></textarea>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">返回列表</button>
+                <button type="button" class="btn btn-info pull-right" ng-click="ok(!orderForm.$invalid)" ng-disabled="orderForm.$invalid">保存</button>
+                <button type="button" class="btn btn-warning pull-right" ng-click="saveAs(!orderForm.$invalid,order)" has-permission="btn:fos:data:order:update:saveas" style="margin-right:15px;">订单另存</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+    </div>
+</div>

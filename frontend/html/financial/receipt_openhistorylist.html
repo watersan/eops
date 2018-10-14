@@ -1,0 +1,87 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
+      <i class="fa fa-times"></i>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">详情</h4>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive">
+      <table class="table" data-hide='{{value|json}}'>
+        <tbody>
+          <tr>
+            <th style="width:20%;">订单Id</th>
+            <td ng-bind="$resolve.value.orderId"></td>
+          </tr>
+          <tr>
+            <th>订单名称</th>
+            <td ng-bind="$resolve.value.orderName"></td>
+          </tr>
+          <tr>
+            <th>产品名称</th>
+            <td ng-bind="$resolve.value.productName"></td>
+          </tr>
+          <tr>
+            <th>负责人</th>
+            <td ng-bind="$resolve.value.directorName"></td>
+          </tr>
+          <tr>
+            <th>投放类型</th>
+            <td ng-bind="$resolve.value.extendType|extendTypefilter"></td>
+          </tr>
+          <tr>
+            <th>应收金额</th>
+            <td ng-bind="$resolve.value.subOAmount|currency : '￥'"></td>
+          </tr>
+          <tr>
+            <th>票据号</th>
+            <td ng-bind="$resolve.value.ticketNum"></td>
+          </tr>
+          <tr>
+            <th>公司抬头</th>
+            <td ng-bind="$resolve.value.company"></td>
+          </tr>
+          <tr>
+            <th>开票单位</th>
+            <td ng-bind="$resolve.value.cpMain|cpMainfilter:ticketorder.cpMain"></td>
+          </tr>
+          <tr>
+            <th>票面金额</th>
+            <td ng-bind="$resolve.value.money|currency : '￥'"></td>
+          </tr>
+          <tr>
+            <th>核减金额</th>
+            <td ng-bind="$resolve.value.cut|currency : '￥'"></td>
+          </tr>
+          <tr>
+            <th>开票日期</th>
+            <td ng-bind="$resolve.value.dataTime|date:'yyyy-MM-dd'"></td>
+          </tr>
+          <tr>
+            <th>结算状态</th>
+            <td ng-bind="$resolve.value.status|ticketStatusfilter:ticketorder.status"></td>
+          </tr>
+          <tr>
+            <th>票据开始时间</th>
+            <td ng-bind="$resolve.value.ticketBegintime|date:'yyyy-MM-dd'"></td>
+          </tr>
+          <tr>
+            <th>票据结束时间</th>
+            <td ng-bind="$resolve.value.ticketEndtime|date:'yyyy-MM-dd'"></td>
+          </tr>
+          <tr>
+            <th>收款金额</th>
+            <td ng-bind="$resolve.value.returnMoney|currency : '￥'"></td>
+          </tr>
+          <tr>
+            <th>收款日期</th>
+            <td ng-bind="$resolve.value.returnDate|date:'yyyy-MM-dd'"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="$dismiss()">关闭</button>
+  </div>
+</div>

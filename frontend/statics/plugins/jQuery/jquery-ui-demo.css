@@ -1,0 +1,35 @@
+@charset "UTF-8";
+/*
+ * jQuery File Upload Demo CSS
+ * https://github.com/blueimp/jQuery-File-Upload
+ *
+ * Copyright 2013, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * https://opensource.org/licenses/MIT
+ */
+
+
+.fileupload-progress {
+	margin: 10px 0;
+}
+.fileupload-progress .progress-extended {
+	margin-top: 5px;
+}
+.error {
+  color: red;
+}
+
+@media (min-width: 481px) {
+  .navigation {
+    list-style: none;
+    padding: 0;
+  }
+  .navigation li {
+    display: inline-block;
+  }
+  .navigation li:not(:first-child):before {
+    content: "| ";
+  }
+}

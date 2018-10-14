@@ -1,0 +1,328 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>OPSV2 控制台</title>
+
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="statics/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="statics/plugins/bootstrap-treeview/bootstrap-treeview.min.css">
+    <link rel="stylesheet" href="statics/plugins/bootstrap-switch/bootstrap-switch.min.css">
+    <!-- <link rel="stylesheet" href="statics/plugins/bootstrap-select/css/bootstrap-select.min.css"> -->
+    <link rel="stylesheet" href="statics/ui-bootstrap/ui-bootstrap-custom-2.4.0-csp.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="statics/plugins/font-awesome/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="statics/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="statics/css/skins/_all-skins.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="statics/plugins/iCheck/all.css">
+    <link rel="stylesheet" href="statics/plugins/select2/select2.css">
+    <!-- bootstrap wysihtml5 - text editor -->
+    <!-- <link rel="stylesheet" href="statics/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"> -->
+    <!-- 日期时间 -->
+    <link rel="stylesheet" href="statics/plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="statics/plugins/timepicker/bootstrap-timepicker.min.css">
+    <link rel="stylesheet" href="statics/plugins/datetimepicker/css/bootstrap-datetimepicker.min.css">
+    <!-- webssh -->
+    <!--
+    <link rel="stylesheet" href="statics/gateone.css">
+  -->
+    <link rel="stylesheet" href="statics/css/codemirror.css">
+    <link rel="stylesheet" href="statics/codemirror/theme/the-matrix.css">
+    <link rel="stylesheet" href="statics/codemirror/addon/scroll/simplescrollbars.css">
+    <link rel="stylesheet" href="statics/plugins/jQueryUI/jquery-ui.min.css">
+    <link rel="stylesheet" href="statics/plugins/jQuery/jquery.fileupload.css">
+    <link rel="stylesheet" href="statics/plugins/jQuery/jquery.fileupload-ui.css">
+    <link rel="stylesheet" href="statics/plugins/jQuery/jquery-ui-demo.css">
+    <link rel="stylesheet" href="statics/css/bk.css">
+    <link rel="stylesheet" href="statics/css/zdops.css">
+    <link href="statics/css/bkTopology.css" rel="stylesheet">
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <link rel="shortcut icon" href="image/favicon.ico" />
+
+    <!-- jQuery 2.2.3 -->
+    <script src="statics/plugins/jQuery/jquery-2.2.4.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="statics/plugins/jQueryUI/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+      $.widget.bridge('uibutton', $.ui.button);
+    </script>
+
+    <!-- Bootstrap 3.3.7 -->
+    <script src="statics/bootstrap/js/bootstrap.min.js"></script>
+    <!-- switch 3.3.2 -->
+    <script src="statics/plugins/bootstrap-switch/bootstrap-switch.min.js"></script>
+    <script src="statics/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <!-- Slimscroll -->
+    <script src="statics/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="statics/plugins/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+
+    <!--angularjs-->
+    <script src="statics/angularjs/angular.min.js"></script>
+    <script src="statics/angularjs/angular-sanitize.min.js"></script>
+    <script src="statics/angularjs/angular-animate.min.js"></script>
+    <script src="statics/angularjs/angular-touch.min.js"></script>
+    <script src="statics/angularjs/angular-route.min.js"></script>
+    <script src="statics/angularjs/i18n/angular-locale_zh.js"></script>
+    <script src="statics/angularjs/angular-resource.min.js"></script>
+    <!--
+    <script src="statics/angularjs/angular-aria.min.js"></script>
+    <script src="statics/angularjs/angular-cookies.min.js"></script>
+    <script src="statics/angularjs/angular-loader.min.js"></script>
+    <script src="statics/angularjs/angular-message-format.min.js"></script>
+    <script src="statics/angularjs/angular-messages.min.js"></script>
+    <script src="statics/angularjs/angular-parse-ext.min.js"></script>
+    -->
+    <!-- <script src="statics/js/underscore-min.js"></script> -->
+    <script src="statics/ui-bootstrap/ui-bootstrap-tpls-2.4.0.min.js"></script>
+    <script src="statics/plugins/iCheck/icheck.min.js"></script>
+    <script src="statics/plugins/select2/select2.full.min.js"></script>
+    <!-- DataTables -->
+    <!-- <script src="statics/plugins/datatables/jquery.dataTables.min.js"></script> -->
+    <!-- <script src="statics/plugins/datatables/dataTables.bootstrap.min.js"></script> -->
+    <!-- 日期时间 -->
+    <script src="statics/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="statics/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="statics/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+    <script src="statics/plugins/datetimepicker/js/bootstrap-datetimepicker.js"></script>
+
+    <!-- <script src="statics/plugins/route-styles.js"></script> -->
+    <!-- <script src="statics/plugins/angular-lazy-script.js"></script> -->
+    <!-- ssh终端 -->
+    <!-- <script src="statics/gateone.js"></script> -->
+    <!-- codemirror -->
+    <!-- <script src="statics/js/codemirror.js"></script> -->
+    <script src="statics/codemirror/codemirror.js"></script>
+    <script src="statics/codemirror/addon/scroll/simplescrollbars.js"></script>
+    <script src="statics/codemirror/keymap/vim.js"></script>
+    <!-- 拓扑图 -->
+    <script src="statics/js/raphael.min.js"></script>
+    <script src="statics/plugins/jQuery/vendor/jquery.ui.widget.js"></script>
+    <script src="statics/plugins/jQuery/jquery.fileupload.js"></script>
+    <script src="statics/plugins/jQuery/jquery.fileupload-ui.js"></script>
+    <!-- The File Upload processing plugin -->
+    <script src="statics/plugins/jQuery/jquery.fileupload-process.js"></script>
+    <!-- The File Upload validation plugin -->
+    <script src="statics/plugins/jQuery/jquery.fileupload-validate.js"></script>
+    <!-- The File Upload Angular JS module -->
+    <script src="statics/plugins/jQuery/jquery.fileupload-angular.js"></script>
+    <!-- <script src="statics/js/jquery.fileupload.min.js"></script> -->
+    <script src="statics/js/bkTopology.js"></script>
+
+
+    <!--opsv2-->
+    <script src="statics/myjs/app.js"></script>
+    <script src="statics/myjs/services/service.js"></script>
+    <script src="statics/myjs/injectors/injector.js"></script>
+    <script src="statics/myjs/controllers/cmdbController.js"></script>
+    <script src="statics/myjs/controllers/userController.js"></script>
+    <script src="statics/myjs/controllers/baseController.js"></script>
+    <script src="statics/myjs/controllers/projectController.js"></script>
+    <script src="statics/myjs/controllers/jobsController.js"></script>
+    <script src="statics/myjs/controllers/ApptplController.js"></script>
+    <script src="statics/myjs/controllers/RoleController.js"></script>
+    <script src="statics/myjs/template/template.js"></script>
+    <!--opsv2-->
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="/base" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>ZD</b></span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>ZDOPS</b></span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less-->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                  <li class="dropdown">
+                    <!-- <select ng-options="item as Environment[item] for item in eee" ng-model="selected"></select> -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup=true>
+                      <span class="hidden-xs">当前环境：{{curenvironment}}<span class="caret"></span></span>
+                    </a>
+                    <!-- <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      当前环境：{{curenvironment}} <span class="caret"></span>
+                    </button> -->
+                    <ul class="dropdown-menu">
+                      <li ng-repeat="(env,perm) in menus.environment">
+                        <a href="#" ng-click="changeenv(env)">{{Environment[env]}}</a>
+                      </li>
+                    </ul>
+                  </li>
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="statics/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <span class="hidden-xs"><span ng-bind="fullname"></span></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="statics/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <p>
+                                    <!--    <small>注册时间：2016-6-27</small>-->
+                                </p>
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" ng-click="resetpwd()" class="btn btn-default btn-flat">修改密码</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="/logout" class="btn btn-default btn-flat">退出</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar 左导航 -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="statics/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p><span ng-bind="fullname"></span></p>
+                    <a href="javascript:;"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+            <!-- search form -->
+            <!-- <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form> -->
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">MAIN NAVIGATION</li>
+                <li class="active">
+                    <a href="/base">
+                        <i class="fa fa-th"></i><span>HOME</span>
+                    </a>
+                </li>
+                <li class="treeview" has-permission="/jobs/jobs|GET">
+                    <a href="/jobs/jobs">
+                        <i class="fa fa-retweet"></i><span>作业平台</span><i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li has-permission="/jobs/flow|GET">
+                          <a href="/jobs/flow">
+                            <i class="fa fa-caret-right">作业流程</i>
+                          </a>
+                        </li>
+                        <li has-permission="/jobs/schedule|GET">
+                          <a href="/jobs/schedule">
+                            <i class="fa fa-caret-right">计划作业</i>
+                          </a>
+                        </li>
+                        <li has-permission="/jobs/runlogs|GET">
+                          <a href="/jobs/runlogs">
+                            <i class="fa fa-caret-right">作业记录</i>
+                          </a>
+                        </li>
+                        <li has-permission="/jobs/ssh|GET">
+                          <a href="/jobs/ssh">
+                            <i class="fa fa-caret-right">WebSSH</i>
+                          </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="/cmdb/projectview" has-permission="/cmdb/project|GET">
+                        <i class="fa fa-retweet"></i><span>配置管理</span><i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li has-permission="/cmdb/project|GET">
+                          <a href="/cmdb/projectview">
+                            <i class="fa fa-caret-right"></i>业务管理
+                          </a>
+                        </li>
+                        <li has-permission="/cmdb/resource|GET">
+                          <a href="/cmdb/resource/list">
+                            <i class="fa fa-caret-right"></i>资源管理
+                          </a>
+                        </li>
+                        <li has-permission="/cmdb/apptpl|GET">
+                          <a href="/cmdb/apptpl/list">
+                            <i class="fa fa-caret-right"></i>应用模版
+                          </a>
+                        </li>
+                        <li has-permission="/cmdb/yunprovider|GET">
+                          <a href="/cmdb/yunprovider/list">
+                            <i class="fa fa-caret-right"></i>服务商
+                          </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview" has-permission="/auth/user|GET">
+                    <a href="javascript:void(0);">
+                        <i class="fa fa-cogs"></i><span>系统</span><i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li has-permission="/auth/user|GET">
+                          <a href="/userlist">
+                            <i class="fa fa-caret-right"></i>用户管理
+                          </a>
+                        </li>
+                        <li has-permission="/auth/roles|GET">
+                          <a href="/rolelist">
+                            <i class="fa fa-caret-right"></i>角色管理
+                          </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <section class="content" ng-view></section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            ZDOPS 控制台
+        </div>
+        <strong>Copyright &copy; 2016 <a href="http://www.zdops.com" target="_blank">ZDOPS</a>.</strong> All rights reserved
+    </footer>
+</div>
+<!-- ./wrapper -->
+    <script src="statics/layer/layer.js"></script>
+    <!-- AdminLTE App -->
+    <script src="statics/js/app.min.js"></script>
+</body>
+</html>

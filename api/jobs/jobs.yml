@@ -1,0 +1,32 @@
+- hosts: "{{job_hosts}}"
+  remote_user: "{{opsenv.ansible_user}}"
+  gather_facts: false
+  become: yes
+  environment:
+    # Inventory变量
+    ZDOPS_HostName: "{{ZDOPS_HostName}}"
+    ZDOPS_CDEnv: "{{ZDOPS_CDEnv}}"
+    ZDOPS_Location: "{{ZDOPS_Location}}"
+    ZDOPS_HOSTIP: "{{ansible_host}}"
+    ZDOPS_CPU: "{{ZDOPS_CPU}}"
+    ZDOPS_Memory: "{{ZDOPS_Memory}}"
+    ZDOPS_Disk_data: "{{ZDOPS_Disk_data}}"
+    ZDOPS_Disk_root: "{{ZDOPS_Disk_root}}"
+
+  tasks:
+    - name: create scripts dir
+      file:
+        path: "{{ opsenv.ZDOPS_SavePath }}"
+        state: directory
+      tags:
+      - always
+    - name: sync executor
+      copy:
+        src: "{{WorkDir}}/Executor"
+        dest: "{{ZDOPS_SavePath}}/Executor"
+        owner: root
+   mode: 0755
+      # {{opsenv.job_front}} {{opsenv.job_newest}} -d -j {{opsenv.job_name}} -a {{opsenv.job_args}}"
+    - name: run command {{opsenv.TaskName}}
+      command: "{{opsenv.ZDOPS_SavePath}}/Executor"
+      environment: "{{opsenv}}"

@@ -1,0 +1,83 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
+      <i class="fa fa-times"></i>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">详情</h4>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive">
+      <table class="table" data-hide='{{order|json}}'>
+        <tbody>
+          <tr>
+            <th style="width:20%;">订单Id</th>
+            <td ng-bind="$resolve.order.orderId"></td>
+          </tr>
+          <tr> 
+            <th>订单名称</th>
+            <td ng-bind="$resolve.order.orderName"></td>
+          </tr>
+          <tr>  
+            <th>产品名称</th>
+            <td ng-bind="$resolve.order.productName"></td>
+          </tr>
+          <tr>  
+            <th>负责人名称</th>
+            <td ng-bind="$resolve.order.directorName"></td>
+          </tr>
+          <tr>  
+            <th>接入来源</th>
+            <td ng-bind="$resolve.order.cooperateName"></td>
+          </tr>
+          <tr>  
+            <th>签约主体</th>
+            <td ng-bind="$resolve.order.cpMain|cpMainfilter:order.cpMain"></td>
+          </tr>
+          <tr>  
+            <th>接入单价</th>
+            <td ng-bind="$resolve.order.payUnit|currency : '￥'"></td>
+          </tr>
+          <tr>  
+            <th>状态</th>
+            <td ng-bind="$resolve.order.status|statusfilter:order.status"></td>
+          </tr>
+          <tr>  
+            <th>预收款</th>
+            <td ng-bind="$resolve.order.advancePay|currency : '￥'"></td>
+          </tr>
+          <tr>  
+            <th>订单类型</th>
+            <td ng-bind="$resolve.order.orderType|orderTypefilter:order.orderType"></td>
+          </tr>
+          <tr>  
+            <th>开始时间</th>
+            <td ng-bind="$resolve.order.beginTime|date:'yyyy-MM-dd'"></td>
+          </tr>
+          <tr>  
+            <th>结束时间</th>
+            <td ng-bind="$resolve.order.endTime|date:'yyyy-MM-dd'"></td>
+          </tr>
+          <tr>  
+            <th>创建时间</th>
+            <td ng-bind="$resolve.order.createTime|date:'yyyy-MM-dd'"></td>
+          </tr>
+          <tr>  
+            <th>修改时间</th>
+            <td ng-bind="$resolve.order.modifyTime|date:'yyyy-MM-dd'"></td>
+          </tr>
+          <tr>  
+            <th>关联Id</th>
+            <td ng-bind="$resolve.order.relationId|emptyfilter:order.relationId"></td>
+          </tr>
+          <tr>  
+            <th>推广类型</th>
+            <td ng-bind="$resolve.order.extendType|extendTypefilter:order.extendType"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="$dismiss()">关闭</button>
+  </div>
+</div>

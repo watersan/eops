@@ -1,0 +1,10 @@
+.modal_wrapper{
+  display: table;
+  height: 100%;
+  margin: 0px auto;
+}
+.modal-dialog{
+  display: table-cell;
+  top: 20%;
+  left: 50%;
+}

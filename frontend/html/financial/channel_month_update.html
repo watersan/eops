@@ -1,0 +1,190 @@
+<!--渠道对账管理  ->  渠道对账修改-->
+<div class="row">
+    <div class="col-md-9">
+        <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">渠道对账修改</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" name="channelMonthForm">
+              <div class="box-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">渠道订单Id</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="渠道订单Id"  ng-model="channelmonth.channelOrderId" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">订单Id</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="订单Id"  ng-model="channelmonth.orderId" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">订单名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="订单名称"  ng-model="channelmonth.orderName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">产品名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="产品名称"  ng-model="channelmonth.productName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">商务负责人</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="商务负责人"  ng-model="channelmonth.orderDirectorName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">渠道Id</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="渠道Id"  ng-model="channelmonth.channelId" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">渠道名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="渠道名称"  ng-model="channelmonth.channelName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">渠道负责人</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="渠道负责人"  ng-model="channelmonth.channelDirectorName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">运营数据</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="运营数据" ng-model="channelmonth.cCountSum">
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">运营成本</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="运营成本" ng-model="channelmonth.cAmountSum">
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':channelMonthForm.mediaRebate.$valid,'has-warning':!channelMonthForm.mediaRebate.$valid}">
+                    <label class="col-sm-2 control-label">媒体补返</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number" name="mediaRebate"  class="form-control input-sm" placeholder="媒体补返" required ng-model="channelmonth.mediaRebate" ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!channelMonthForm.mediaRebate.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="channelMonthForm.mediaRebate.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':channelMonthForm.otherExpense.$valid,'has-warning':!channelMonthForm.otherExpense.$valid}">
+                    <label class="col-sm-2 control-label">其他支出</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number" name="otherExpense" class="form-control input-sm" placeholder="销售返点" required ng-model="channelmonth.otherExpense" ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!channelMonthForm.otherExpense.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="channelMonthForm.otherExpense.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':channelMonthForm.channelCut.$valid,'has-warning':!channelMonthForm.channelCut.$valid}">
+                    <label class="col-sm-2 control-label">核减支出</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number"  name="channelCut" class="form-control input-sm" placeholder="核减支出" required ng-model="channelmonth.channelCut" ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!channelMonthForm.channelCut.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="channelMonthForm.channelCut.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">实际支出</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number"  ng-disabled=true class="form-control input-sm" placeholder="{{channelmonth.cAmountSum*1+channelmonth.mediaRebate*1+1*channelmonth.otherExpense-1*channelmonth.channelCut}}"  >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                
+
+
+
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">返回列表</button>
+                <button type="button" class="btn btn-info pull-right" ng-click="ok(!channelMonthForm.$invalid)" ng-disabled="channelMonthForm.$invalid">保存</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+    </div>
+</div>
+

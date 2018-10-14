@@ -1,0 +1,104 @@
+<!--渠道对账管理  ->  渠道对账列表-->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">渠道对账管理</h3>
+
+                <div class="box-tools"></div>
+            </div>
+            <div class="clearfix">
+                <div style="float: right; padding:0 15px;">
+
+                    <div has-permission="btn:fos:duizhang:channel:history" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <a href="/channelmonthhistorylist"  class="btn btn-success btn-sm" data-reveal-id="add-label-myModal" data-animation="fade" title="历史数据"><i class="fa fa-bar-chart"></i></a>
+                    </div>
+
+                    <div class="input-group input-group-sm" style="width:180px; float: left;margin-right:10px;padding-bottom:10px;">
+                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                        <input type="daterange" name="" class="form-control pull-right active" ng-model="dates4" ranges="ranges">
+                    </div>
+
+                    
+                    <div class="input-group input-group-sm" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="订单名称..." ng-keypress="enter($event)" ng-model="input.parammap.orderName">
+                    </div>
+                    <div class="input-group input-group-sm" style="width:180px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="渠道名称..." ng-keypress="enter($event)" ng-model="input.parammap.channelName">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" ng-click="pageChanged(1)"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /.box-header -->
+            <div ng-switch="tablestatus">
+                <div class="box-body table-responsive no-padding" ng-switch-when="1">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <!-- <th>序号</th> -->
+                                <!-- <th>渠道订单Id</th> -->
+                                <!-- <th>订单Id</th> -->
+                                <th>订单名称</th>
+                                <!-- <th>产品名称</th> -->
+                                <th>商务负责人</th>
+                                <!-- <th>签约主体</th> -->
+                                <!-- <th>渠道Id</th> -->
+                                <th>渠道名称</th>
+                                <th>渠道负责人</th>
+                                <!-- <th>运营数据</th> -->
+                                <th>运营成本</th>
+                                <th style="width:80px">媒体补返</th>
+                                <th style="width:80px">其他支出</th>
+                                <th style="width:80px">核减支出</th>
+                                <th style="width:80px">实际支出</th>
+                                <th>开始时间</th>
+                                <th>结束时间</th>
+                                <th>详情</th>
+                                <th class="numeric">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="channelmonth in datalist" >
+                                <!-- <td>{{$index+1}}</td> -->
+                                <!-- <td ng-bind="channelmonth.channelOrderId"></td> -->
+                                <!-- <td ng-bind="channelmonth.orderId"></td> -->
+                                <td ng-bind="channelmonth.orderName"></td>
+                                <!-- <td ng-bind="channelmonth.productName"></td> -->
+                                <td ng-bind="channelmonth.orderDirectorName"></td>
+                                <!-- <td ng-bind="channelmonth.cpMain|cpMainfilter"></td> -->
+                                <!-- <td ng-bind="channelmonth.channelId"></td> -->
+                                <td ng-bind="channelmonth.channelName"></td>
+                                <td ng-bind="channelmonth.channelDirectorName"></td>
+                                <!-- <td ng-bind="channelmonth.cCountSum" ></td> -->
+                                <td ng-bind="channelmonth.cAmountSum|currency : '￥'"></td>
+                                <td><input ng-model="channelmonth.mediaRebate" class="form-control input-sm" style="height:26px;padding:3px 10px;"/></td>
+                                <td><input ng-model="channelmonth.otherExpense" class="form-control input-sm" style="height:26px;padding:3px 10px;"/></td>
+                                <td><input ng-model="channelmonth.channelCut" class="form-control input-sm" style="height:26px;padding:3px 10px;"/></td>
+                                <td><input ng-disabled=true placeholder="{{channelmonth.cAmountSum*1+channelmonth.mediaRebate*1+1*channelmonth.otherExpense-1*channelmonth.channelCut}}" ng-model="channelmonth.subAmount" class="form-control input-sm" style="height:26px;padding:3px 10px;"/></td>
+                                <td ng-bind="channelmonth.entryBegintime|date:'yyyy-MM-dd'"></td>
+                                <td ng-bind="channelmonth.entryEndtime|date:'yyyy-MM-dd'"></td>
+                                <th><a class="btn btn-default btn-xs" data-toggle="modal" ng-click="open(channelmonth)">查看</a></th>    
+                                <td class="numeric" valign="middle">
+                                    <a href="javascript:;" ng-click="check(channelmonth)" class="btn btn-primary btn-xs" has-permission="btn:fos:duizhang:channel:duizhang">对账</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-body table-responsive no-padding" ng-switch-when="2">
+                    <center style="padding:20px 0;">无数据 .....</center>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="pagesize" max-size="maxSize" rotate="true" ng-change="pageChanged()" boundary-links="true" class="pagination pagination-sm no-margin pull-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                                    last-text="&raquo;"></uib-pagination>                    
+            </div>
+        </div>
+        <!-- /.box -->
+    </div>
+</div>

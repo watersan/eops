@@ -1,0 +1,122 @@
+<!--收票管理  ->  收票历史列表-->
+
+<!--付款操作-->
+    <script type="text/ng-template" id="receive_pay.html">
+        <div id="" class="middle-box text-center loginscreen animated fadeInDown">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">付款操作</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">付款金额</label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <input type="number" class="form-control input-sm"  ng-model="receiveorder.payMoney"/>
+                                    </div>
+                                    <div class="col-sm-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">付款日期</label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control input-sm" required uib-datepicker-popup ng-model="receiveorder.payDate"
+                                       is-open="popup1.opened" datepicker-options="dateOptions1" ng-required="true"
+                                       close-text="关闭" clear-text="清除" current-text="今天" ng-click="open(popup1)"/>
+                                       <!-- <input ui-date="dateOptions" class="m-wrap large" required  ng-model="receiveorder.payDate"> -->
+                                    </div>
+                                    <div class="col-sm-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" ng-click="ok()">付款</button>
+                    <button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+                </div>
+            </div>
+        </div>
+    </script>
+<!--付款操作 end-->
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">收票历史</h3>
+                <div class="box-tools"></div>
+            </div>
+            <div class="clearfix">
+                <div style="float: right; padding:0 15px;">
+
+                    <div has-permission="btn:fos:finance:receive:shoupiaohistory:fukuanhistory" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <a href="/payhistorylist" class="btn btn-warning btn-sm" data-reveal-id="add-label-myModal" data-animation="fade" title="付款历史"><i class="fa fa-external-link-square"></i></a>
+                    </div>
+
+                   <!-- <div class="input-group-sm" style="width:190px; float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" placeholder="订单名称..." ng-keypress="enter($event)" ng-model="input.parammap.orderName" class="form-control">
+                    </div>-->
+                    <div class="input-group input-group-sm" style="width:220px;float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" placeholder="渠道订单..." ng-keypress="enter($event)" ng-model="input.parammap.channelOrderName" class="form-control">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" ng-click="pageChanged(1)"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-switch="tablestatus">
+                <div class="box-body table-responsive no-padding" ng-switch-when="1">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>渠道订单</th>
+                                <th>票据号</th>
+                                <th>收票单位</th>
+                                <th >票面金额</th>
+                                <th >状态</th>
+                                <th>收票日期</th>
+                                <th class="numeric">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="receiveorder in datalist" >
+                                <td>{{$index+1}}</td>
+                                <td ng-bind="receiveorder.channelOrderName"></td>
+                                <td ng-bind="receiveorder.ticketNum"></td>
+                                <td ng-bind="receiveorder.company"></td>
+                                <td ng-bind="receiveorder.money|currency : '￥'"></td>
+                                <td ng-bind="receiveorder.status|ticketStatusfilter:receiveorder.status"></td>
+                                <td ng-bind="receiveorder.dataTime|date:'yyyy-MM-dd'"></td>
+                                <td class="numeric" valign="middle" ng-switch="receiveorder.status">
+                                    <a ng-switch-when="0" href="javascript:;" class="btn btn-warning btn-xs" ng-click=" pay(receiveorder)" has-permission="btn:fos:finance:receive:shoupiaohistory:fukuan">付款</a>
+                                    <a ng-switch-when="1" href="javascript:;" class="btn btn-warning btn-xs disabled">已付款</a>
+                                    <a class="btn btn-primary btn-xs" href="/receivehistoryupdate/{{receiveorder.id}}" has-permission="btn:fos:finance:receive:shoupiaohistory:update">修改</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-body table-responsive no-padding" ng-switch-when="2">
+                    <center style="padding:20px 0;">无数据 .....</center>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="pagesize" max-size="maxSize" rotate="true" ng-change="pageChanged()" boundary-links="true" class="pagination pagination-sm no-margin pull-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                                    last-text="&raquo;"></uib-pagination>                    
+            </div>
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+

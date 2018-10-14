@@ -1,0 +1,38 @@
+<!--配置管理  ->  添加配置项-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">配置项信息</h3>
+          </div>
+          <!-- /.box-header -->
+          <div ng-switch="tablestatus">
+            <div class="box-body table-responsive no-padding">
+              <table id="infotable" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>名称ID</th>
+                    <th>名称</th>
+                    <th>类别</th>
+                    <th>值</th>
+                    <th>锁定</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="field in item.fields" class="ng-scope">
+                    <td ng-bind="field.nameid"></td>
+                    <td ng-bind="field.name"></td>
+                    <td ng-bind="field.type"></td>
+                    <td ng-bind="field.value"></td>
+                    <td ng-bind="field.mode"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="box-footer">
+            <button type="button" class="btn btn-info pull-right" ng-click="cancel()">返回列表</button>
+          </div>
+        </div>
+    </div>
+</div>

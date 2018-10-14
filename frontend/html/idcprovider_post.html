@@ -1,0 +1,150 @@
+<!--系统设置  ->  用户添加-->
+<div class="row">
+    <div class="col-md-9">
+        <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{action}}IDC</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" name="userForm">
+              <div class="box-body">
+                <div class="form-group" ng-class="{'has-success':!userForm.name.$invalid,'has-warning':userForm.name.$error.required,'has-error':(!userForm.name.$error.required)&&userForm.name.$invalid}"> <!--正确 has-success 错误 has-error 预警 has-warning-->
+                  <label class="col-sm-2 control-label">名称</label>
+
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                          <input type="text" class="form-control input-sm" name="name" placeholder="" required ng-model="item.name" ng-readonly="updatereadonly">
+                      </div>
+                      <div class="col-sm-2">
+                        <span class="help-block" ng-show="userForm.name.$error.required"><i class="fa fa-bell-o"></i></span>
+                        <span class="help-block" ng-show="!userForm.name.$invalid"><i class="fa fa-check"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">公司</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="company" placeholder="" required ng-model="item.company" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">位置</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="location" placeholder="" required ng-model="item.location" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">运营商</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <select ng-model="item.isp" ng-disabled="readonly">
+                          <option ng-repeat="(k,v) in isplist" value="{{k}}">{{v}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">联系人</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                          <input type="text" class="form-control input-sm" name="conects" placeholder="" ng-model="item.conects" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!userForm.mobile.$invalid,'has-warning':userForm.mobile.$error.required,'has-error':(!userForm.mobile.$error.required)&&userForm.mobile.$invalid}">
+                  <label class="col-sm-2 control-label">手机</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="mobile" placeholder="" ng-pattern="/^0?1[0|3|4|5|7|8][0-9]\d{8}$/" ng-model="item.mobile" ng-readonly="readonly">
+                      </div>
+                      <div class="col-sm-2">
+                        <span class="help-block" ng-show="userForm.ip.$error.required"><i class="fa fa-bell-o"></i></span>
+                        <span class="help-block" ng-show="!userForm.ip.$invalid"><i class="fa fa-check"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!userForm.email.$invalid,'has-warning':userForm.email.$error.required,'has-error':(!userForm.email.$error.required)&&userForm.email.$invalid}">
+                  <label class="col-sm-2 control-label">邮箱</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="email" placeholder="" ng-pattern="/^[\w\_\-\.]+@[\w\-\.]+$/" ng-model="item.email" ng-readonly="readonly">
+                      </div>
+                      <div class="col-sm-2">
+                        <span class="help-block" ng-show="userForm.ip.$error.required"><i class="fa fa-bell-o"></i></span>
+                        <span class="help-block" ng-show="!userForm.ip.$invalid"><i class="fa fa-check"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!userForm.bw.$invalid,'has-warning':userForm.bw.$error.required,'has-error':(!userForm.bw.$error.required)&&userForm.bw.$invalid}">
+                  <label class="col-sm-2 control-label">带宽</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="number" class="form-control input-sm" name="bw" placeholder="单位为MB" ng-pattern="/^\d+$/" ng-model="item.bw" ng-readonly="readonly">
+                      </div>
+                      <div class="col-sm-2">
+                        <span class="help-block" ng-show="userForm.ip.$error.required"><i class="fa fa-bell-o"></i></span>
+                        <span class="help-block" ng-show="!userForm.ip.$invalid"><i class="fa fa-check"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">开始日期</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <div class="date input-group">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control input-sm" id="begindate" name="begindate" placeholder="" ng-model="item.begindate" ng-readonly="readonly">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">结束日期</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <div class="date input-group">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control input-sm" id="enddate" name="enddate" placeholder="" ng-model="item.enddate" ng-readonly="readonly">
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" class="btn btn-default" ng-click="jumpto()">返回列表</button>
+                <button type="button" class="btn btn-info pull-right" ng-click="ok(!userForm.$invalid)" ng-disabled="readonly">保存</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+    </div>
+</div>

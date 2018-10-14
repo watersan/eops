@@ -1,0 +1,59 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
+      <i class="fa fa-times"></i>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">详情</h4>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive">
+      <table class="table" data-hide='{{value|json}}'>
+        <tbody>
+          <tr>
+            <th style="width:20%;">订单Id</th>
+            <td ng-bind="$resolve.value.orderId"></td>
+          </tr>
+          <tr>
+            <th>订单名称</th>
+            <td ng-bind="$resolve.value.orderName"></td>
+          </tr>
+          <tr>
+            <th>产品名称</th>
+            <td ng-bind="$resolve.value.productName"></td>
+          </tr>
+          <tr>
+            <th>负责人</th>
+            <td ng-bind="$resolve.value.directorName"></td>
+          </tr>
+          <tr>
+            <th>接入来源</th>
+            <td ng-bind="$resolve.value.cooperateName"></td>
+          </tr>
+          <tr>
+            <th>签约主体</th>
+            <td ng-bind="$resolve.value.cpMain|cpMainfilter"></td>
+          </tr>
+          <tr>
+            <th>运营数据</th>
+            <td ng-bind="$resolve.value.oCountSum"></td>
+          </tr>
+          <tr>
+            <th>运营收入</th>
+            <td ng-bind="$resolve.value.oAmountSum|currency : '￥'"></td>
+          </tr>
+          <tr>
+            <th>开始时间</th>
+            <td ng-bind="$resolve.value.entryBegintime|date:'yyyy-MM-dd'"></td>
+          </tr>
+          <tr>
+            <th>结束时间</th>
+            <td ng-bind="$resolve.value.entryEndtime|date:'yyyy-MM-dd'"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="$dismiss()">关闭</button>
+  </div>
+</div>

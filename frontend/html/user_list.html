@@ -1,0 +1,122 @@
+<!--用户管理  ->  展示列表-->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">用户管理</h3>
+      </div>
+      <div class="clearfix">
+        <div style="float: right; padding:0 15px;">
+          <div has-permission="/auth/user:POST" style="float: left;margin-right:10px;
+            padding-bottom:10px;">
+            <a href="/useradd"  class="btn btn-sm">
+              <i class="fa fa-plus fa-2x"></i>
+            </a>
+          </div>
+        </div>
+			  <div class="input-group input-group-sm" style="width:180px;
+          padding-bottom:10px;padding-left:10px;">
+          <input type="text" class="form-control pull-right"
+            placeholder="用户账号..." name="search"
+            ng-model="itemFilter">
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div ng-switch="tablestatus">
+        <div class="box-body table-responsive no-padding" ng-switch-when="1">
+          <table id="usertable" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th><!-- <input type="checkbox" ng-model="selectAll" ng-click="doSelectAll()" class="ng-pristine ng-untouched ng-valid ng-scope">--></th>
+                <th>
+                  <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                    账号
+                    <span ng-show="sortType == 'name' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'name' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a href="#" ng-click="sortType = 'fullname'; sortReverse = !sortReverse">
+                    姓名
+                    <span ng-show="sortType == 'fullname' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'fullname' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a href="#" ng-click="sortType = 'roles'; sortReverse = !sortReverse">
+                    角色
+                    <span ng-show="sortType == 'roles' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'roles' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th class="numeric">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="user in datalist | orderBy:sortType:sortReverse | filter:itemFilter | filter:paginate" select-on-click class="ng-scope">
+                <td><!-- <input type="checkbox" ng-model="user.selected" class="flat-redi ng-pristine ng-untouched ng-valid">--></td>
+                <td class="name ng-scope"> <p class="name-wrapper ng-binding" ng-click="doSelect(user)" ng-bind="user.name"></p></td>
+                <td ng-bind="user.fullname"></td>
+                <td ng-bind="user.roles" ></td>
+                <td class="numeric" valign="middle">
+                  <a href="/userupdate/{{user._id}}" has-permission="/auth/user:PUT" class="btn btn-primary btn-xs">修改</a>&nbsp;&nbsp;
+                  <a href="javascript:;" ng-click="deleteuser(user)" has-permission="/auth/user:DELETE" class="btn btn-danger btn-xs">删除</a>&nbsp;&nbsp;
+                  <a href="javascript:;" ng-click="resetpwd(user.name)" has-permission="/auth/pwd:PUT" class="btn btn-default btn-xs">重置密码</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="box-body table-responsive no-padding" ng-switch-when="2">
+          <center style="padding:20px 0;">无数据 .....</center>
+        </div>
+      </div>
+
+      <div class="box-footer clearfix">
+        <!--
+        <uib-pagination total-items="totalItems" ng-model="currentPage"
+          items-per-page="pagesize" max-size="maxSize" rotate="true"
+          ng-change="pageChanged()" boundary-links="true"
+          class="pagination pagination-sm no-margin pull-right"
+          previous-text="&lsaquo;" next-text="&rsaquo;"
+          first-text="&laquo;" last-text="&raquo;">
+        </uib-pagination>
+        -->
+        <div class="col-sm-6">
+          <ul uib-pagination total-items="totalItems" ng-model="currentPage"
+            max-size="maxSize" boundary-link-numbers="true" rotate="false"
+            items-per-page="numPerPage" class="pagination-sm pull-left">
+          </ul>
+        </div>
+        <div class="col-sm-6">
+          <label for="usertable_length" class="pull-right" style="margin:20px 0;">每页显示的行数：
+            <select name="usertable_length" ng-model="numPerPage" aria-controls="usertable">
+              <option value="5" ng-selected="true" selected="yes">5</option>
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

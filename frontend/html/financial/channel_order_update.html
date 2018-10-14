@@ -1,0 +1,153 @@
+<!--渠道订单管理  ->  渠道订单修改-->
+<div class="row">
+    <div class="col-md-9">
+        <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">渠道订单修改</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" name="orderchannelForm">
+              <div class="box-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">渠道订单Id</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="渠道订单Id"  ng-model="orderchannel.channelOrderId" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">订单Id</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="订单Id"  ng-model="orderchannel.orderId" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">订单名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="订单名称"  ng-model="orderchannel.orderName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">渠道Id</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="渠道Id"  ng-model="orderchannel.channelId" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">渠道名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="渠道名称"  ng-model="orderchannel.channelName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':orderchannelForm.outerUnit.$valid,'has-warning':!orderchannelForm.outerUnit.$valid}">
+                    <label class="col-sm-2 control-label">外放单价</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number" name="outerUnit" class="form-control input-sm" placeholder="外放单价" required ng-model="orderchannel.outerUnit" ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!orderchannelForm.outerUnit.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="orderchannelForm.outerUnit.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':orderchannelForm.status.$valid,'has-warning':!orderchannelForm.status.$valid}">
+                    <label class="col-sm-2 control-label">状态</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <select name="status" class="form-control input-sm" required ng-model="orderchannel.status">
+                                    <option value="">请选择</option>
+                                    <option value="0">正常</option>
+                                    <option value="1">暂停</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!orderchannelForm.status.$valid"><i class="fa fa-bell-o"></i>请选择状态</span>
+                                <span class="help-block" ng-show="orderchannelForm.status.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':orderchannelForm.autoflag.$valid,'has-warning':!orderchannelForm.autoflag.$valid}">
+                    <label class="col-sm-2 control-label">是否读取</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <select name="autoflag" class="form-control input-sm" required ng-model="orderchannel.autoflag">
+                                    <option value="">请选择</option>
+                                    <option value="0">不读取</option>
+                                    <option value="1">读取</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!orderchannelForm.autoflag.$valid"><i class="fa fa-bell-o"></i>请选择是否读取</span>
+                                <span class="help-block" ng-show="orderchannelForm.autoflag.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':orderchannelForm.advancePay.$valid,'has-warning':!orderchannelForm.advancePay.$valid}">
+                    <label class="col-sm-2 control-label">预付款</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number"  name="advancePay" class="form-control input-sm" placeholder="预付款" required ng-model="orderchannel.advancePay" ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!orderchannelForm.advancePay.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="orderchannelForm.advancePay.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">备注</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <textarea rows="5" cols="60" placeholder="备注信息" class="form-control input-sm" ng-model="orderchannel.remark"></textarea>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">返回列表</button>
+                <button type="button" class="btn btn-info pull-right" ng-click="ok(!orderchannelForm.$invalid)" ng-disabled="orderchannelForm.$invalid">保存</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+    </div>
+</div>

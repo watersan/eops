@@ -1,0 +1,42 @@
+<body class="gray-bg">
+
+<button type="button" class="btn btn-default" id="modalclick" ng-click="open()">Open me!</button>
+
+<script type="text/ng-template" id="updatepwd.html">
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div class="login-box">
+          <!-- /.login-logo -->
+          <div class="login-box-body">
+          <p class="login-box-msg">密码修改</p>
+            <form role="form" name="loginform" ng-submit="ok()" novalidate>
+              <div class="form-group has-feedback">
+                <input type="password" class="form-control" placeholder="旧密码" ng-model="user.oldpassword" ng-required="true">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+              </div>
+              <div class="form-group has-feedback">
+                <input type="password" class="form-control" placeholder="新密码" ng-model="user.password" ng-required="true">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+              </div>
+              <div class="form-group has-feedback">
+                <input type="password" class="form-control" placeholder="确认密码" ng-model="user.repassword" ng-required="true">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+              </div>
+
+              <div class="row">                <!-- /.col -->
+                <div class="col-xs-12">
+                    <button type="button" class="btn btn-default pull-left"  ng-click="cancel()">返回</button>
+                    <button type="submit" class="btn btn-info pull-right" ng-disabled="loginform.$invalid">提交</button>
+                </div>
+                <!-- /.col -->
+              </div>
+            </form>
+            <div class="social-auth-links text-center">
+              <p ng-bind="message" class="text-red"></p>
+            </div>
+          </div>
+          <!-- /.login-box-body -->
+        </div>
+    </div>
+</script>
+
+</body>

@@ -1,0 +1,105 @@
+<!--每日渠道订单  ->  每日渠道订单维护-->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">每日渠道订单维护</h3>
+
+                <div class="box-tools"></div>
+            </div>
+            <div class="clearfix">
+                <div style="float: right; padding:0 15px;">
+
+                    <div has-permission="btn:fos:data:ocday:insert" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <a href="/ocdayadd/-1"  class="btn btn-info btn-sm" data-reveal-id="add-label-myModal" data-animation="fade" title="生成每日渠道订单"><i class="fa fa-plus"></i></a>
+                    </div>
+                    <div has-permission="btn:fos:data:ocday:history" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <a href="/historyocdaylist"  class="btn btn-success btn-sm" data-reveal-id="add-label-myModal" data-animation="fade" title="历史数据"><i class="fa fa-bar-chart"></i></a>
+                    </div>
+
+                    <div class="input-group input-group-sm" style="width:180px; float: left;margin-right:10px;padding-bottom:10px;">
+                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                        <input type="daterange" name="" class="form-control pull-right active" ng-model="dates4" ranges="ranges">
+                    </div>
+
+                    
+                    <div class="input-group input-group-sm" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="订单名称/产品名称..." ng-keypress="enter($event)" ng-model="input.parammap.orderName">
+                    </div>
+                    <div class="input-group input-group-sm" style="width:180px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="渠道名称..." ng-keypress="enter($event)" ng-model="input.parammap.channelName">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" ng-click="pageChanged(1)"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div ng-switch="tablestatus">
+                <div class="box-body table-responsive no-padding" ng-switch-when="1">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <!-- <th>序号</th> -->
+                                <th>待录时间</th>
+                                <!-- <th>渠道订单Id</th> -->
+                                <!-- <th>订单Id</th> -->
+                                <th>订单名称</th>
+                                <th>产品名称</th>
+                                <th>商务负责人</th>
+                                <th style="width:80px">接入单价</th>
+                                <th style="width:80px">订单数量</th>
+                                <th style="width:80px">订单金额</th>
+                                <!-- <th>渠道Id</th> -->
+                                <th>渠道简称</th>
+                                <th>渠道负责人</th>
+                                <th style="width:80px">外放单价</th>
+                                <th style="width:80px">渠道数量</th>
+                                <th style="width:80px">渠道金额</th>
+                                <th>状态</th>
+                                <th>详情</th>
+                                <th class="numeric">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ocday in datalist">
+                                <!-- <td>{{$index+1}}</td> -->
+                                <td ng-bind="ocday.entryTime | date:'yyyy-MM-dd'"></td>
+                                <!-- <td ng-bind="ocday.channelOrderId"></td> -->
+                                <!-- <td ng-bind="ocday.orderId"></td> -->
+                                <td ng-bind="ocday.orderName"></td>
+                                <td ng-bind="ocday.productName"></td>
+                                <td ng-bind="ocday.orderDirectorName"></td>
+                                <td><input ng-model="ocday.payUnit" class="form-control input-sm" style="height:26px;padding:3px 10px;"/></td>
+                                <td><input ng-model="ocday.oCount" class="form-control input-sm" style="height:26px;padding:3px 10px;"/></td>
+                                <td><input ng-model="ocday.oAmount" placeholder="{{ocday.payUnit*ocday.oCount}}" class="form-control input-sm" style="height:26px;padding:3px 10px;"/></td>
+                                <!-- <td ng-bind="ocday.channelId" ></td> -->
+                                <td ng-bind="ocday.channelName"></td>
+                                <td ng-bind="ocday.channelDirectorName"></td>
+                                <td ><input ng-model="ocday.outerUnit" class="form-control input-sm" style="height:26px;padding:3px 10px;"/></td>
+                                <td><input ng-model="ocday.cCount" class="form-control input-sm" style="height:26px;padding:3px 10px;"/></td>
+                                <td><input ng-model="ocday.cAmount" placeholder="{{ocday.outerUnit*ocday.cCount}}" class="form-control input-sm" style="height:26px;padding:3px 10px;"/></td>
+                                <td ng-bind="ocday.ocDayStatus | statusfilter:ocday.ocDayStatus"></td>
+                                <th><a class="btn btn-default btn-xs"  data-toggle="modal" ng-click="open(ocday)">查看</a></th>
+                                <td class="numeric" valign="middle"><a href="javascript:;" ng-click="deleteocday(ocday)" class="btn btn-danger btn-xs" has-permission="btn:fos:data:ocday:delete">删除</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-body table-responsive no-padding" ng-switch-when="2">
+                    <center style="padding:20px 0;">无数据 .....</center>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="pagesize" max-size="maxSize" rotate="true" ng-change="pageChanged()" boundary-links="true" class="pagination pagination-sm no-margin pull-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                                    last-text="&raquo;"></uib-pagination>
+            </div>
+            <div class="box-footer">
+                <button type="button" class="btn btn-info pull-right" ng-click="ok()">保存</button>
+            </div>
+        </div>
+        <!-- /.box -->
+    </div>
+</div>

@@ -1,0 +1,101 @@
+<!--订单管理  ->  订单列表-->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">订单列表</h3>
+
+                <div class="box-tools"></div>
+            </div>
+            <div class="clearfix">
+                <div style="float: right; padding:0 15px;">
+                    <div style="float: left;margin-right:10px;padding-bottom:10px;" has-permission="btn:fos:data:order:insert">
+                        <a href="/orderadd" class="btn btn-info btn-sm" data-reveal-id="add-label-myModal" data-animation="fade"><i class="fa fa-plus"></i></a>
+                    </div>
+                    <div class="input-group input-group-sm" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="订单名称..." ng-keypress="enter($event)" ng-model="input.parammap.orderName">
+                    </div>
+                    <div class="input-group input-group-sm" style="width:180px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="产品名称..." ng-keypress="enter($event)" ng-model="input.parammap.productName">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" ng-click="pageChanged(1)"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div ng-switch="tablestatus">
+                <div class="box-body table-responsive no-padding" ng-switch-when="1">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>订单Id</th>
+                                <th>订单名称</th>
+                                <th>产品名称</th>
+                                <!--<th>负责人Id</th>-->
+                                <th>负责人名称</th>
+                                <!-- <th>接入来源</th> -->
+                                <!-- <th>签约主体</th> -->
+                                <th>接入单价</th>
+                                <th>状态</th>
+                                <th>预收款</th>
+                                <!-- <th>订单类型</th> -->
+                                <!-- <th>开始时间</th> -->
+                                <!-- <th>结束时间</th> -->
+                                <!-- <th>创建时间</th> -->
+                                <th>修改时间</th>
+                                <!--<th>备注</th>-->
+                                <th>关联Id</th>
+                                <th>推广类型</th>
+                                <th>详情</th>
+                                <th class="numeric">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="order in datalist" >
+                                <td>{{$index+1}}</td>
+                                <td ng-bind="order.orderId"></td>
+                                <td ng-bind="order.orderName"></td>
+                                <td ng-bind="order.productName"></td>
+                                <!--<td ng-bind="order.directorId" ></td>-->
+                                <td ng-bind="order.directorName" ></td>
+                                <!-- <td ng-bind="order.cooperateName"></td> -->
+                                <!-- <td ng-bind="order.cpMain|cpMainfilter:order.cpMain"></td> -->
+                                <td ng-bind="order.payUnit|currency : '￥'" ></td>
+                                <td ng-bind="order.status|statusfilter:order.status" ></td>
+                                <td ng-bind="order.advancePay|currency : '￥'"></td>
+                                <!-- <td ng-bind="order.orderType|orderTypefilter:order.orderType"></td> -->
+                                <!-- <td ng-bind="order.beginTime|date:'yyyy-MM-dd'" ></td> -->
+                                <!-- <td ng-bind="order.endTime|date:'yyyy-MM-dd'" ></td> -->
+                                <!-- <td ng-bind="order.createTime|date:'yyyy-MM-dd'"></td> -->
+                                <td ng-bind="order.modifyTime|date:'yyyy-MM-dd'"></td>
+                                <!--<td ng-bind="order.remark|emptyfilter:order.remark" ></td>-->
+                                <td ng-bind="order.relationId|emptyfilter:order.relationId" ></td>
+                                <td ng-bind="order.extendType|extendTypefilter:order.extendType" ></td>
+                                <th><a class="btn btn-default btn-xs"  data-toggle="modal" ng-click="open(order)">查看</a></th>
+                                <td class="numeric" valign="middle">
+                                    <a ng-if="order.splitParent == null" href="/orderupdate/{{order.orderId}}" class="btn btn-primary btn-xs" has-permission="btn:fos:data:order:update">修改</a>
+                                    <span ng-if="order.splitParent != null" class="btn btn-primary btn-xs disabled" has-permission="btn:fos:data:order:update">修改</span>&nbsp;&nbsp;
+                                    <a ng-if="order.isSplit == 0 && order.status == 0 && order.beginTime<=nowDate && order.endTime>=nowDate"   href="/ocdayadd/{{order.orderId}}" class="btn btn-success btn-xs" has-permission="btn:fos:data:order:day">每日</a>
+                                    <span ng-if="!(order.isSplit == 0 && order.status == 0 && order.beginTime<=nowDate && order.endTime>=nowDate) " class="btn btn-success btn-xs disabled" has-permission="btn:fos:data:order:day">每日</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-body table-responsive no-padding" ng-switch-when="2">
+                    <center style="padding:20px 0;">无数据 .....</center>
+                </div>
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer clearfix">
+                <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="pagesize" max-size="maxSize" rotate="true" ng-change="pageChanged()" boundary-links="true" class="pagination pagination-sm no-margin pull-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                                last-text="&raquo;"></uib-pagination>
+            </div>
+        </div>
+        <!-- /.box -->
+    </div>
+</div>

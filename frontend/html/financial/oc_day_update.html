@@ -1,0 +1,195 @@
+<!--每日渠道订单管理  ->  每日渠道订单修改-->
+<div class="row">
+    <div class="col-md-9">
+        <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">每日渠道修改</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" name="ocdayForm">
+              <div class="box-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">渠道订单Id</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="渠道订单Id"  ng-model="ocday.channelOrderId" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">订单Id</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="订单Id"  ng-model="ocday.orderId" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">订单名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="订单名称"  ng-model="ocday.orderName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">产品名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="产品名称"  ng-model="ocday.productName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">商务负责人</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="商务负责人"  ng-model="ocday.orderDirectorName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-success':ocdayForm.payUnit.$valid,'has-warning':!ocdayForm.payUnit.$valid}">
+                    <label class="col-sm-2 control-label">接入单价</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number" ng-disabled="ocday.orderMonthStatus==1" name="payUnit"  class="form-control input-sm" placeholder="接入单价" required  ng-model="ocday.payUnit" ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!ocdayForm.payUnit.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="ocdayForm.payUnit.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':ocdayForm.oCount.$valid,'has-warning':!ocdayForm.oCount.$valid}">
+                    <label class="col-sm-2 control-label">订单数量</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number" ng-disabled="ocday.orderMonthStatus==1" name="oCount"   class="form-control input-sm" placeholder="订单数量" required  ng-model="ocday.oCount" ng-pattern="/^[0-9]\d*$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!ocdayForm.oCount.$valid"><i class="fa fa-bell-o"></i>请输入非负整数</span>
+                                <span class="help-block" ng-show="ocdayForm.oCount.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':ocdayForm.oAmount.$valid,'has-warning':!ocdayForm.oAmount.$valid}">
+                    <label class="col-sm-2 control-label">订单金额</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number"  ng-disabled="ocday.orderMonthStatus==1" name="oAmount"  class="form-control input-sm" placeholder="订单金额" required ng-model="ocday.oAmount" ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!ocdayForm.oAmount.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="ocdayForm.oAmount.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">渠道Id</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="渠道Id"  ng-model="ocday.channelId" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">渠道名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="渠道名称"  ng-model="ocday.channelName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">渠道负责人</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="渠道负责人"  ng-model="ocday.channelDirectorName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':ocdayForm.outerUnit.$valid,'has-warning':!ocdayForm.outerUnit.$valid}">
+                    <label class="col-sm-2 control-label">外放单价</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number" ng-disabled="ocday.channelMonthStatus==1" name="outerUnit" class="form-control input-sm" placeholder="外放单价" required ng-model="ocday.outerUnit" ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!ocdayForm.outerUnit.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="ocdayForm.outerUnit.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':ocdayForm.cCount.$valid,'has-warning':!ocdayForm.cCount.$valid}">
+                    <label class="col-sm-2 control-label">渠道数量</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number" name="cCount"  ng-disabled="ocday.channelMonthStatus==1"  class="form-control input-sm" placeholder="渠道数量" required ng-model="ocday.cCount" ng-pattern="/^[0-9]\d*$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!ocdayForm.cCount.$valid"><i class="fa fa-bell-o"></i>请输入非负整数</span>
+                                <span class="help-block" ng-show="ocdayForm.cCount.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':ocdayForm.cAmount.$valid,'has-warning':!ocdayForm.cAmount.$valid}">
+                    <label class="col-sm-2 control-label">渠道金额</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number" ng-disabled="ocday.channelMonthStatus==1"  name="cAmount"  class="form-control input-sm" placeholder="渠道金额" required ng-model="ocday.cAmount" ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!ocdayForm.cAmount.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="ocdayForm.cAmount.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">返回列表</button>
+                <button type="button" class="btn btn-info pull-right" ng-click="ok(!ocdayForm.$invalid)" ng ng-disabled="ocdayForm.$invalid">保存</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+    </div>
+</div>

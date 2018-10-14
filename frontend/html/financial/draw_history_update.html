@@ -1,0 +1,162 @@
+<div class="row">
+    <div class="col-md-9">
+        <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">出票历史数据修改</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" name="drawForm">
+              <div class="box-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">流水号</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="流水号"  ng-model="ticketorder.ticketCode" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!drawForm.ticketNum.$error.required,'has-warning':drawForm.ticketNum.$error.required}">
+                    <label class="col-sm-2 control-label">票据号</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text"  name="ticketNum"  class="form-control input-sm" placeholder="票据号" required  ng-model="ticketorder.ticketNum" >
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="drawForm.ticketNum.$error.required"><i class="fa fa-bell-o"></i>请填写票据号</span>
+                                <span class="help-block" ng-show="!drawForm.ticketNum.$error.required"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">订单名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="订单名称"  ng-model="ticketorder.orderName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">产品名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="产品名称"  ng-model="ticketorder.productName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">公司抬头</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="公司抬头"  ng-model="ticketorder.company" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">开票公司</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <select name="" ng-disabled=true class="form-control input-sm" required ng-model="ticketorder.cpMain">
+                                    <option value="1">磨盘精准</option>
+                                    <option value="2">磨盘云讯</option>
+                                    <option value="3">中传佳讯</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">是否开票</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <select name="" class="form-control input-sm" required ng-model="ticketorder.isCashierTicket">
+                                    <option value="0">是</option>
+                                    <option value="1">否</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':drawForm.subOAmount.$valid,'has-warning':!drawForm.subOAmount.$valid}">
+                    <label class="col-sm-2 control-label">票据金额</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number" name="subOAmount" ng-disabled=true  class="form-control input-sm" placeholder="票据金额"   ng-model="ticketorder.subOAmount" ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!drawForm.subOAmount.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="drawForm.subOAmount.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!drawForm.dataTime.$error.required,'has-warning':drawForm.dataTime.$error.required}">
+                    <label class="col-sm-2 control-label">出票日期</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" name="dataTime" class="form-control input-sm" required uib-datepicker-popup ng-model="ticketorder.dataTime"
+                                   is-open="popup1.opened" datepicker-options="dateOptions1" ng-required="true"
+                                   close-text="关闭" clear-text="清除" current-text="今天" ng-click="open(popup1)"/>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="drawForm.dataTime.$error.required"><i class="fa fa-bell-o"></i>请选择出票日期</span>
+                                <span class="help-block" ng-show="!drawForm.dataTime.$error.required"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">票据开始时间</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="票据开始"  ng-model="ticketorder.ticketBegintime|date:'yyyy-MM-dd'">
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">票据结束时间</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="票据结束"  ng-model="ticketorder.ticketEndtime|date:'yyyy-MM-dd'">
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">返回列表</button>
+                <button type="button" class="btn btn-info pull-right" ng-click="ok(!drawForm.$invalid)" ng-disabled="drawForm.$invalid">保存</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+    </div>
+</div>
+

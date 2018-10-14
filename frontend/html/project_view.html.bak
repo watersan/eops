@@ -1,0 +1,179 @@
+<div class="row">
+  <div class="col-md-3">
+    <div class="box box-solid">
+      <div class="box-header with-border">
+        <h3 class="box-title">业务管理</h3>
+      </div>
+      <div class="box-body no-padding" style="max-height: 540px;overflow-y: scroll;">
+        <div id="projecttree" class="treeview"></div>
+      </div>
+      <div class="box-footer text-center">
+        <a href="#">资源分配<i class="fa fa-server"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{title}}</h3>
+        <div class="box-tools col-md-5" ng-show="showwhat.business">
+          <div class="has-feedback pull-right">
+            <button type="button" class="btn btn-primary btn-xs" ng-click="changeview('projectattr')">属性</button>&nbsp;
+            <button type="button" class="btn btn-primary btn-xs" ng-click="changeview('projectdeploy')">部署</button>
+          </div>
+        </div>
+        <div class="box-tools" ng-show="showwhat.addapps">
+          <div class="has-feedback pull-right">
+            从应用模版创建：<select ng-model="appstemplate" ng-options="template.name for template in appstemplates"></select>
+          </div>
+        </div>
+        <!-- /.box-tools -->
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body empty" id="business" ng-show="showwhat.business">
+        <div id="topology"></div>
+        <!-- <div id="subbox" class="col-md-5" style="position: absolute;font-family: Arial, Helvetica, sans-serif;font-size: 16px;background-color: #ddd;padding: 5px;font-weight: bold;visibility: hidden;">
+          <form class="form-horizontal" name="itemForm">
+            <div class="box-body">
+              <div class="form-group" ng-class="{'has-success':!itemForm.name.$invalid,'has-warning':itemForm.name.$error.required}">
+                <div class="row">
+                  <label class="col-sm-4 control-label" style="font-size: 13px;">脚本名称</label>
+                  <div class="col-sm-7">
+                      <input type="text" class="form-control input-sm" name="name" placeholder="作业名称"
+                        required ng-pattern="/[a-zA-Z][\w|\.|-]{2,}\.(sh|py|pl)/" ng-model="item.name">
+                  </div>
+                  <div class="col-sm-1"></div>
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+              <button type="button" class="btn btn-default" ng-click="cancel()">返回</button>
+              <button type="button" class="btn btn-info pull-right" ng-click="ok(!itemForm.$invalid)">保存</button>
+            </div>
+          </form>
+        </div> -->
+      </div>
+      <div class="box-body empty" ng-show="showwhat.projectattr">
+        <div id="projectattr">
+          <form class="form-horizontal" name="itemForm">
+            <div class="box-body">
+              <div class="form-group" ng-class="{'has-success':!itemForm.name.$invalid,'has-warning':itemForm.name.$error.required}">
+                <div class="row">
+                  <label class="col-sm-4 control-label" style="font-size: 13px;">项目名称</label>
+                  <div class="col-sm-7">
+                      <input type="text" class="form-control input-sm" name="name" placeholder="项目名称"
+                        required ng-pattern="/^.{2,}$/" ng-model="item.name">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <label class="col-sm-4 control-label" style="font-size: 13px;">项目描述</label>
+                  <div class="col-sm-7">
+                    <textarea class="form-control" id="describe" name="describe" ng-model="item.describe"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row" id="form_opser">
+                  <label class="col-sm-4 control-label" style="font-size: 13px;" for="form_opser">主运维</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control keywork-input" name="opser"
+                      required ng-model="item.opser">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row" id="form_secondopser">
+                  <label class="col-sm-4 control-label" style="font-size: 13px;" for="form_secondopser">备份运维</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control keywork-input" name="secondopser"
+                      required ng-model="item.secondopser">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+              <button type="button" class="btn btn-default" ng-click="cancel()">返回</button>
+              <button type="button" class="btn btn-info pull-right" ng-click="ok(!itemForm.$invalid,'project')">保存</button>
+            </div>
+            <!-- /.box-footer -->
+          </form>
+        </div>
+      </div>
+      <div class="box-body empty" ng-show="showwhat.clusterattr">
+        <div id="clusterattr">
+          <form class="form-horizontal" name="itemForm1">
+            <div class="box-body">
+              <div class="form-group" ng-class="{'has-success':!itemForm.name.$invalid,'has-warning':itemForm.name.$error.required}">
+                <div class="row">
+                  <label class="col-sm-4 control-label" style="font-size: 13px;">项目名称</label>
+                  <div class="col-sm-7">
+                      <input type="text" class="form-control input-sm" name="name" placeholder="项目名称"
+                        required ng-pattern="/^.{2,}$/" ng-model="item.name">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <label class="col-sm-4 control-label" style="font-size: 13px;">项目描述</label>
+                  <div class="col-sm-7">
+                    <textarea class="form-control" id="describe" name="describe" ng-model="item.describe"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <label class="col-sm-4 control-label" style="font-size: 13px;">依赖</label>
+                  <div class="col-sm-7">
+                    <!--
+                    <select id="form_depend" class="form-control col-sm-7" multiple="multiple" name="depend" required ng-model="item.depend" style="width:100%;">
+                    </select>
+                  -->
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <label class="col-sm-4 control-label" style="font-size: 13px;">共享</label>
+                  <div class="col-sm-7">
+                    <input type="checkbox" name="shared" ng-model="item.shared"
+                      value="shared" >
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row" id="form_opser">
+                  <label class="col-sm-4 control-label" style="font-size: 13px;" for="form_opser">主运维</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control keywork-input" name="opser"
+                      required ng-model="item.opser">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row" id="form_secondopser">
+                  <label class="col-sm-4 control-label" style="font-size: 13px;" for="form_secondopser">备份运维</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control keywork-input" name="secondopser"
+                      required ng-model="item.secondopser">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+              <button type="button" class="btn btn-default" ng-click="cancel()">返回</button>
+              <button type="button" class="btn btn-info pull-right" ng-click="ok(!itemForm.$invalid,'cluster')">保存</button>
+            </div>
+            <!-- /.box-footer -->
+          </form>
+        </div>
+      </div>
+      <div class="box-body empty" ng-show="showwhat.hostlist">
+      </div>
+      <div class="box-body empty" ng-show="showwhat.nohostlist">
+        <p>请在左侧栏选则要添加设备的应用，再点击资源分配</p>
+      </div>
+    </div>
+  </div>
+</div>

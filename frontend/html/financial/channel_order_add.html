@@ -1,0 +1,168 @@
+<!--订单管理  ->  订单列表-->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">订单选择</h3>
+
+                <div class="box-tools"></div>
+            </div>
+            <div class="clearfix">
+                <div style="float: right; padding:0 15px;">
+                    <div class="input-group input-group-sm" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="订单Id" ng-keypress="" ng-model="orderinput.parammap.orderId">
+                    </div>
+                    <div class="input-group input-group-sm" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="订单名称" ng-keypress="" ng-model="orderinput.parammap.orderName">
+                    </div>
+                    <div class="input-group input-group-sm" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="产品名称" ng-keypress="" ng-model="orderinput.parammap.productName">
+                    </div>
+                    <div class="input-group input-group-sm" style="width:180px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="负责人名称" ng-keypress="" ng-model="orderinput.parammap.directorName">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" ng-click="orderpageChanged()"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div ng-switch="ordertablestatus">
+                <div class="box-body table-responsive no-padding" ng-switch-when="1">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>订单Id</th>
+                                <th>订单名称</th>
+                                <th>产品名称</th>
+                                <th>负责人名称</th>
+                                <th>接入来源</th>
+                                <th>签约主体</th>
+                                <th>接入单价</th>
+                                <th>状态</th>
+                                <th>订单类型</th>
+                                <th>开始时间</th>
+                                <th>结束时间</th>
+                                <th>关联Id</th>
+                                <th>推广类型</th>
+                                <th class="numeric">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="order in orderlist" >
+                                <td>{{$index+1}}</td>
+                                <td ng-bind="order.orderId"></td>
+                                <td ng-bind="order.orderName"></td>
+                                <td ng-bind="order.productName"></td>
+                                <td ng-bind="order.directorName" ></td>
+                                <td ng-bind="order.cooperateName"></td>
+                                <td ng-bind="order.cpMain|cpMainfilter:order.cpMain"></td>
+                                <td ng-bind="order.payUnit|currency : '￥'" ></td>
+                                <td ng-bind="order.status|statusfilter:order.status"></td>
+                                <td ng-bind="order.orderType|orderTypefilter:order.orderType"></td>
+                                <td ng-bind="order.beginTime|date:'yyyy-MM-dd'" ></td>
+                                <td ng-bind="order.endTime|date:'yyyy-MM-dd'" ></td>
+                                <td ng-bind="order.relationId|emptyfilter:order.relationId" ></td>
+                                <td ng-bind="order.extendType|extendTypefilter:order.extendType" ></td>
+                                <td class="numeric" valign="middle"><a href="javascript:;" ng-click="removeorder($index)" class="btn btn-danger btn-xs">移除</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-body table-responsive no-padding" ng-switch-when="2">
+                    <center style="padding:20px 0;">无数据 .....</center>
+                </div>
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer clearfix">
+                <uib-pagination total-items="ordertotalItems" ng-model="ordercurrentPage" items-per-page="orderpagesize" max-size="ordermaxSize" rotate="true" ng-change="orderpageChanged()" boundary-links="true" class="pagination pagination-sm no-margin pull-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+            </div>
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">渠道选择</h3>
+            </div>
+            <div class="clearfix">
+                <div style="float: right; padding:0 15px;">
+                    <div class="input-group input-group-sm" style="width:180px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="渠道全称..." ng-keypress="" ng-model="channelinput.parm">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" ng-click="channelpageChanged()"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div ng-switch="channeltablestatus">
+                <div class="box-body table-responsive no-padding" ng-switch-when="1">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>渠道号</th>
+                                <th>渠道全称</th>
+                                <th>渠道简称</th>
+                                <th>磨盘商务</th>
+                                <th>渠道类型</th>
+                                <th style="width:90px;">外放单价</th>
+                                <th style="width:90px;">状态</th>
+                                <th style="width:90px;">是否读取</th>
+                                <th class="numeric">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="channelinfo in channellist" >
+                                <td>{{$index+1}}</td>
+                                <td ng-bind="channelinfo.id"></td>
+                                <td ng-bind="channelinfo.fullName"></td>
+                                <td ng-bind="channelinfo.name" ></td>
+                                <td ng-bind="channelinfo.mpBusinessName.split('(')[0]" ></td>
+                                <td ng-bind="channelinfo.channelCategoryId | channeltypefilter"></td>
+                                <td><input ng-model="channelinfo.outerUnit" class="form-control input-sm" style="height:26px;padding:3px 10px;" /></td>
+                                <td>
+                                    <select name=""  ng-model="channelinfo.orderchannelStatus" class="form-control input-sm" style="height:26px;padding:3px 10px;">
+                                        <option value="">选择</option>
+                                        <option value="0">正常</option>
+                                        <option value="1">暂停</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name=""  ng-model="channelinfo.autoFlag" class="form-control input-sm" style="height:26px;padding:3px 10px;">
+                                        <option value="">选择</option>
+                                        <option value="0">否</option>
+                                        <option value="1">是</option>
+                                    </select>
+                                </td>
+                                <td class="numeric" valign="middle"><a href="javascript:;" ng-click="removechannel($index)" class="btn btn-danger btn-xs">移除</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-body table-responsive no-padding" ng-switch-when="2">
+                    <center style="padding:20px 0;">无数据 .....</center>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <uib-pagination total-items="channeltotalItems" ng-model="channelcurrentPage" items-per-page="channelpagesize" max-size="channelmaxSize" rotate="true" ng-change="channelpageChanged()" boundary-links="true" class="pagination pagination-sm no-margin pull-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                                    last-text="&raquo;"></uib-pagination>
+            </div>
+            <div class="box-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">返回列表</button>
+                <button type="button" class="btn btn-info pull-right" ng-click="ok()">保存</button>
+            </div>
+            <!-- /.box-footer -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,212 @@
+<!--订单管理  ->  订单列表-->
+<style>
+    select, input {
+        width: 100px;
+    }
+
+
+</style>
+<div style="padding-top:20px;">
+    <div class="portlet box blue">
+        <div class="portlet-title">
+            <div class="caption">历史数据</div>
+            <div class="tools">
+            </div>
+        </div>
+        <div class="portlet-body flip-scroll">
+            <div class="clearfix">
+
+                <div class="btn-group pull-right">
+                    <!--<div action="#" class="form-search">
+                        <div class="input-append">
+                            <input class="col-md-3" placeholder="订单名称..." ng-keypress="enter($event)" ng-model="input.parammap.orderName" type="text">
+                            <input class="col-md-3" placeholder="产品名称..." ng-keypress="enter($event)" ng-model="input.parammap.productName" type="text">
+                            <input ui-date="dateOptions" class="col-md-3"  placeholder="开始时间..."   ng-model="input.parammap.begintime">
+                            <input ui-date="dateOptions" class="col-md-3"  placeholder="结束时间..."   ng-model="input.parammap.endtime">
+                            <button class="btn green" type="button" ng-click="pageChanged(1)">搜索</button>
+                        </div>
+                    </div>-->
+                </div>
+                <div class="btn-group pull-right">
+                    <div action="#" class="form-search">
+                        <div class="input-append">
+
+                            <input class="col-md-3" placeholder="订单名称..." ng-keypress="enter($event)" ng-model="input.parammap.orderName" type="text">
+                            <input class="col-md-3" placeholder="产品名称..." ng-keypress="enter($event)" ng-model="input.parammap.productName" type="text">
+                            <input class="col-md-3" placeholder="接入来源..." ng-keypress="enter($event)" ng-model="input.parammap.cooperateName" type="text">
+                            <input ui-date="dateOptions" class="col-md-3"  placeholder="开始时间..."   ng-model="input.parammap.begintime">
+                            <input ui-date="dateOptions" class="col-md-3"  placeholder="结束时间..."   ng-model="input.parammap.endtime">
+
+
+                            <select  class="col-md-3" required ng-model="input.parammap.extendType" >
+                                <option value="">推广类型...</option>
+                                <option value="1">CPC</option>
+                                <option value="2">CPA</option>
+                                <option value="3">CPT</option>
+                                <option value="4">冲榜</option>
+                                <option value="5">CPD</option>
+                                <option value="6">快速任务</option>
+                                <option value="7">ASO</option>
+                                <option value="8">CPS</option>
+                            </select>
+                            <select  class="col-md-3" required ng-model="input.parammap.statusDraw" >
+                                <option value="">出票状态...</option>
+                                <option value="1">已出票</option>
+                                <option value="0">未出票</option>
+                            </select>
+                            <select  class="col-md-3" required ng-model="input.parammap.statusReturn" >
+                                <option value="">回款状态...</option>
+                                <option value="1">已回款</option>
+                                <option value="0">未回款</option>
+                            </select>
+                            <select  class="col-md-3" required ng-model="input.parammap.directorName" >
+                                <option value="">商务人员...</option>
+                                <option value="{{user.trueName}}({{user.id}})" ng-bind="user.trueName" ng-repeat="user in userlist"></option>
+                            </select>
+                            <button class="btn green" type="button" ng-click="pageChanged(1)">搜索</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div  ng-switch="tablestatus">
+                <div ng-switch-when="1">
+
+                    <table class="table-bordered table-striped table-condensed flip-content " >
+                        <thead class="flip-content">
+                        <tr>
+                            <th>总计</th>
+                            <th >订单数量</th>
+                            <th >订单金额</th>
+                            <th>订单对账金额</th>
+                            <!--<th >渠道数量</th>-->
+                            <th >渠道金额</th>
+                            <th>渠道对账金额</th>
+                            <th>实付金额</th>
+                            <th>票据金额</th>
+                            <th>回款金额</th>
+                            <th>利润</th>
+                            <th>利润率</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td align="center" >总计</td>
+                            <td align="center" ng-bind="sum.oCount"></td>
+                            <td align="center" ng-bind="sum.oAmount|currency : '￥'"></td>
+                            <td align="center" ng-bind="sum.subOAmount|currency : '￥'"></td>
+                            <!--<td align="center" ng-bind="sum.cCount"></td>-->
+                            <td align="center" ng-bind="sum.cAmount|currency : '￥'"></td>
+                            <td align="center" ng-bind="sum.subCAmount|currency : '￥'"></td>
+                            <td align="center" ng-bind="sum.realCAmount|currency : '￥'"></td>
+                            <td align="center" ng-bind="sum.money|currency : '￥'"></td>
+                            <td align="center" ng-bind="sum.returnMoney|currency : '￥'"></td>
+                            <td align="center" ng-bind="sum.profit |currency : '￥'"></td>
+                            <td align="center" ng-bind="(sum.profitMargin*100|number:2)+'%'"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr/>
+
+                    <table class="table-bordered table-striped table-condensed flip-content " >
+                        <thead class="flip-content">
+                        <tr>
+                            <!--<th>序号</th>-->
+                            <th>开始时间</th>
+                            <th>结束时间</th>
+                            <th>订单名称</th>
+                            <th>产品名称</th>
+                            <th>商务负责人</th>
+                            <th>接入来源</th>
+                            <th>签约主体</th>
+                            <th>订单类型</th>
+                            <th>推广类型</th>
+                            <th>接入单价</th>
+                            <th>订单数量</th>
+                            <th>订单金额</th>
+                            <th>订单对账金额</th>
+                            <!--<th>渠道名称</th>
+                            <th>渠道负责人</th>
+                            <th>外放单价</th>
+                            <th>渠道数量</th>-->
+                            <th>渠道金额</th>
+                            <th>渠道对账金额</th>
+                            <th>实付金额</th>
+                            <th>是否开票</th>
+                            <th>票据号</th>
+                            <th>票据金额</th>
+                            <th>开票日期</th>
+                            <th>是否回款</th>
+                            <th>回款金额</th>
+                            <th>回款日期</th>
+                            <th>利润</th>
+                            <th>利润率</th>
+
+
+
+
+                          <!--  <th class="numeric">操作</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr  ng-repeat="history in datalist" >
+                            <!--<td align="center" >{{$index+1}}</td>-->
+                            <td align="center" ng-bind="history.beginTime|date:'yyyy-MM-dd'"></td>
+                            <td align="center" ng-bind="history.endTime|date:'yyyy-MM-dd'"></td>
+                            <td align="center" ng-bind="history.orderName"></td>
+                            <td align="center" ng-bind="history.productName" ></td>
+                            <td align="center" ng-bind="history.orderDirectorName"></td>
+                            <td align="center" ng-bind="history.cooperateName"></td>
+                            <td align="center" ng-bind="history.cpMain" ></td>
+                            <td align="center" ng-bind="history.orderType" ></td>
+                            <td align="center" ng-bind="history.extendType"></td>
+                            <td align="center" ng-bind="history.payUnit|currency : '￥'"></td>
+                            <td align="center" ng-bind="history.oCount" ></td>
+                            <td align="center" ng-bind="history.oAmount|currency : '￥'" ></td>
+                            <td align="center" ng-bind="history.subOAmount|currency : '￥'" ></td>
+                            <!--<td align="center" ng-bind="history.channelName" ></td>
+                            <td align="center" ng-bind="history.channelDirectorName" ></td>
+                            <td align="center" ng-bind="history.outerUnit" ></td>
+                            <td align="center" ng-bind="history.cCount" ></td>-->
+                            <td align="center" ng-bind="history.cAmount|currency : '￥'" ></td>
+                            <td align="center" ng-bind="history.subCAmount|currency : '￥'" ></td>
+                            <td align="center" ng-bind="history.realCAmount|currency : '￥'" ></td>
+                            <td align="center" ng-bind="history.statusDraw" ></td>
+                            <td align="center" ng-bind="history.ticketNum" ></td>
+                            <td align="center" ng-bind="history.money|currency : '￥'" ></td>
+                            <td align="center" ng-bind="history.dataTime|date:'yyyy-MM-dd'" ></td>
+                            <td align="center" ng-bind="history.statusReturn" ></td>
+                            <td align="center" ng-bind="history.returnMoney|currency : '￥'" ></td>
+                            <td align="center" ng-bind="history.returnTime|date:'yyyy-MM-dd'" ></td>
+                            <td align="center" ng-bind="history.profit|currency : '￥'" ></td>
+                            <td align="center" ng-bind="history.profitMargin" ></td>
+
+
+
+
+
+
+
+                            <!--<td class="numeric" align="center" valign="middle">
+                                <a ng-if="order.splitParent == null" href="/orderupdate/{{order.orderId}}" >修改&nbsp;|&nbsp;</a>
+                                <span ng-if="order.splitParent != null">修改&nbsp;|&nbsp;</span>
+                                <a ng-if="order.isSplit == 0 && order.status == 0 && order.beginTime<=nowDate && order.endTime>=nowDate"   href="/ocdayadd/{{order.orderId}}" >每日</a>
+                                <span ng-if="!(order.isSplit == 0 && order.status == 0 && order.beginTime<=nowDate && order.endTime>=nowDate) ">每日</span>
+                            </td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-switch-when="2">
+                    无数据 .....
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="pagination pagination-centered">
+                    <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="pagesize" max-size="maxSize" rotate="true" ng-change="pageChanged()" boundary-links="true" class="pagination-lg" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                                    last-text="&raquo;"></uib-pagination>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

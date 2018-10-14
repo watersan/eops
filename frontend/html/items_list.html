@@ -1,0 +1,129 @@
+<!--用户管理  ->  展示列表-->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">配置项信息</h3>
+      </div>
+      <div class="clearfix">
+        <div style="float: right; padding:0 15px;">
+          <div has-permission="cmdb/itemadd" style="float: left;margin-right:10px;
+            padding-bottom:10px;">
+            <a href="/itemadd"  class="btn btn-sm">
+              <i class="fa fa-plus fa-2x"></i>
+            </a>
+          </div>
+        </div>
+			  <div class="input-group input-group-sm" style="width:180px;
+          padding-bottom:10px;">
+          <input type="text" class="form-control pull-right"
+            placeholder="配置项..." ng-keypress="enter($event)"
+            ng-model="itemFilter">
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div ng-switch="tablestatus">
+        <div class="box-body" ng-switch-when="1">
+          <table id="usertable" class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                  <th><input type="checkbox" ng-click="doSelectAll()" class="ng-pristine ng-untouched ng-valid ng-scope"></th>
+                <th>
+                  <a href="#" ng-click="sortType = 'nameid'; sortReverse = !sortReverse">
+                    ID
+                    <span ng-show="sortType == 'nameid' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'nameid' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                    名称
+                    <span ng-show="sortType == 'name' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'name' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a href="#" ng-click="sortType = 'type'; sortReverse = !sortReverse">
+                    类型
+                    <span ng-show="sortType == 'type' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'type' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a href="#" >
+                    索引
+                    <span ng-show="sortType == 'index' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'index' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                    描述
+                </th>
+                <th class="numeric">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in datalist | orderBy:sortType:sortReverse | filter:itemFilter | filter:paginate" select-on-click class="ng-scope">
+                  <td><input type="checkbox" ng-model="item.selected" class="flat-redi ng-pristine ng-untouched ng-valid"></td>
+                  <td class="name ng-scope"> <p class="name-wrapper ng-binding" ng-click="doSelect(item)" ng-bind="item.nameid"></p></td>
+                <td ng-bind="item.name"></td>
+                <td ng-bind="item.type" ></td>
+                <td ng-bind="item.index"></td>
+                <td ng-bind="item.desc"></td>
+                <td class="numeric" valign="middle">
+                  <a href="/iteminfo/{{item._id}}" has-permission="cmdb/iteminfo" class="btn btn-default btn-xs">查看</a>&nbsp;&nbsp;
+                  <a href="/itemupdate/{{item._id}}" has-permission="cmdb/itemmod" class="btn btn-default btn-xs">修改</a>&nbsp;&nbsp;
+                  <a href="javascript:;" ng-click="delete(item)" has-permission="cmdb/itemdel" class="btn btn-danger btn-xs">删除</a>&nbsp;&nbsp;
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="box-body table-responsive no-padding" ng-switch-when="2">
+          <center style="padding:20px 0;">无数据 .....</center>
+        </div>
+      </div>
+
+      <div class="box-footer clearfix">
+        <div class="col-sm-6">
+          <ul uib-pagination total-items="totalItems" ng-model="currentPage"
+            max-size="maxSize" boundary-link-numbers="true" rotate="false"
+            items-per-page="numPerPage" class="pagination-sm pull-left">
+          </ul>
+        </div>
+        <div class="col-sm-6">
+          <label for="usertable_length" class="pull-right" style="margin:20px 0;">每页显示的行数：
+            <select name="usertable_length" ng-model="numPerPage" aria-controls="usertable">
+              <option value="5" ng-selected="true">5</option>
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

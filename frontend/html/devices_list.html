@@ -1,0 +1,175 @@
+<!--用户管理  ->  展示列表-->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">设备管理</h3>
+      </div>
+      <div class="clearfix">
+        <div style="float: right; padding:0 15px;">
+          <div has-permission="cmdb/devicesadd" style="float: left;margin-right:10px;
+            padding-bottom:10px;">
+            <a href="/devicesync" class="btn btn-info btn-sm"
+              data-reveal-id="add-label-myModal" data-animation="fade">
+              <i class="fa fa-rotate-right">同步</i>
+            </a>
+            <a href="/devicesadd" class="btn btn-info btn-sm"
+              data-reveal-id="add-label-myModal" data-animation="fade">
+              <i class="fa fa-plus"></i>
+            </a>
+          </div>
+        </div>
+			  <div class="input-group input-group-sm" style="float: left;width:180px;
+          padding-bottom:10px;">
+          <input type="text" class="form-control"
+            placeholder="设备信息..." ng-keypress="enter($event)"
+            ng-model="opsFilter">
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div ng-switch="tablestatus">
+        <div class="box-body table-responsive no-padding" ng-switch-when="1">
+          <table id="opstable" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>
+                  <input type="checkbox" ng-click="doSelectAll()"
+                  class="ng-pristine ng-untouched ng-valid ng-scope">
+                </th>
+                <th>
+                  <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                   主机名
+                    <span ng-show="sortType == 'name' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'name' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a href="#" ng-click="sortType = 'ip'; sortReverse = !sortReverse">
+                    IP
+                    <span ng-show="sortType == 'ip' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'ip' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a href="#" ng-click="sortType = 'cpu'; sortReverse = !sortReverse">
+                    CPU
+                    <span ng-show="sortType == 'cpu' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'cpu' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a href="#" ng-click="sortType = 'memory'; sortReverse = !sortReverse">
+                    内存
+                    <span ng-show="sortType == 'memory' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'memory' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a href="#" ng-click="sortType = 'disk'; sortReverse = !sortReverse">
+                    磁盘
+                    <span ng-show="sortType == 'disk' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'disk' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a href="#" ng-click="sortType = 'price'; sortReverse = !sortReverse">
+                    价格
+                    <span ng-show="sortType == 'price' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'price' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th class="numeric">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="device in datalist | orderBy:sortType:sortReverse
+              | filter:opsFilter | filter:paginate" select-on-click class="ng-scope">
+                <td>
+                  <input type="checkbox" ng-model="device.selected"
+                  class="flat-redi ng-pristine ng-untouched ng-valid">
+                </td>
+                <td class="name ng-scope">
+                  <p class="name-wrapper ng-binding" ng-click="doSelect(user)"
+                  ng-bind="device.name"></p>
+                </td>
+                <td ng-bind="device.ip"></td>
+                <td ng-bind="device.cpu" ></td>
+                <td ng-bind="device.memory"></td>
+                <td ng-bind="device.disk"></td>
+                <td ng-bind="device.price"></td>
+                <td class="numeric" valign="middle">
+                  <a href="/deviceinfo/{{user.name}}"
+                  has-permission="cmdb/deviceinfo"
+                  class="btn btn-primary btn-xs">查看</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="box-body table-responsive no-padding" ng-switch-when="2">
+          <center style="padding:20px 0;">无数据 .....</center>
+        </div>
+      </div>
+
+      <div class="box-footer clearfix">
+        <!--
+        <uib-pagination total-items="totalItems" ng-model="currentPage"
+          items-per-page="pagesize" max-size="maxSize" rotate="true"
+          ng-change="pageChanged()" boundary-links="true"
+          class="pagination pagination-sm no-margin pull-right"
+          previous-text="&lsaquo;" next-text="&rsaquo;"
+          first-text="&laquo;" last-text="&raquo;">
+        </uib-pagination>
+        -->
+        <div class="col-sm-6">
+          <uib-pagination total-items="totalItems" ng-model="currentPage"
+            max-size="5" boundary-links="true"
+            previous-text="&lsaquo;" next-text="&rsaquo;"
+            first-text="&laquo;" last-text="&raquo;"
+            items-per-page="numPerPage" class="pagination pagination-sm no-margin pull-left">
+          </uib-pagination>
+        </div>
+        <div class="col-sm-6">
+          <label for="opstable_length" class="no-margin pull-right">每页显示的行数：
+            <select name="opstable_length" ng-model="numPerPage" aria-controls="opstable">
+              <option value="5" ng-selected="true">5</option>
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

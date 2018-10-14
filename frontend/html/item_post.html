@@ -1,0 +1,55 @@
+<!--配置管理  ->  添加配置项-->
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">添加{{cmdbname}}配置项</h3>
+      </div>
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form class="form-horizontal" name="itemForm">
+        <div class="box-body">
+          <div class="form-group" ng-repeat="field in fields">
+            <label class="col-sm-2 control-label">{{field.name}}</label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-md-10" ng-show="itemfieldshow(field, 'str')">
+                  <input type="text" class="form-control input-sm" ng-required="field.required" name="{{field.nameid}}" ng-model="item[field.nameid]" ng-readonly={{readonly}}>
+                </div>
+                <div class="col-md-10" ng-show="itemfieldshow(field, 'float')">
+                  <input type="text" class="form-control input-sm" ng-required="field.required" name="{{field.nameid}}" ng-model="item[field.nameid]" ng-pattern="/^-?[0-9]+\.[0-9]{2}/" ng-readonly={{readonly}}>
+                </div>
+                <div class="col-md-10" ng-show="itemfieldshow(field, 'int')">
+                  <input type="text" class="form-control input-sm" ng-required="field.required" name="{{field.nameid}}" ng-model="item[field.nameid]" ng-pattern="/^-?[0-9]+/" ng-readonly={{readonly}}>
+                </div>
+                <div class="col-md-10" ng-show="itemfieldshow(field, 'bool')">
+                  <input icheck type="checkbox" name="{{field.nameid}}" ng-model="item[field.nameid]" ng-readonly={{readonly}}>
+                </div>
+                <div class="col-md-3" ng-show="itemfieldshow(field, 'source')">
+                  <select class="form-control" ng-options=" k for (k,v) in sourcelist" name="{{field.nameid}}" ng-model="item[field.nameid]"></select>
+                </div>
+                <div class="col-md-10" ng-show="itemfieldshow(field, 'text')">
+                  <textarea class="form-control input-sm" ng-required="field.required" name="{{field.nameid}}" ng-model="item[field.nameid]" ng-maxlength="200" ng-readonly={{readonly}}></textarea>
+                </div>
+                <div class="col-md-10" ng-show="itemfieldshow(field, 'time')">
+                  <div class="input-group date" ng-show="itemfieldshow(field, 'time')" datetimepicker data-date="2015-01-01T09:00:07Z" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input1">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                    <input class="form-control" size="16" type="text" value="" ng-model="item[field.nameid]">
+                    <input type="hidden" id="dtp_input1">
+                    <br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <button type="button" class="btn btn-default" ng-click="cancel()">返回列表</button>
+          <button type="button" class="btn btn-info pull-right" ng-click="ok(!itemForm.$invalid)" ng-show="showsubmit">提交</button>
+        </div>
+        <!-- /.box-footer -->
+      </form>
+    </div>
+  </div>
+</div>

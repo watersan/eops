@@ -1,0 +1,434 @@
+<div class="row">
+  <div class="col-md-3">
+    <div class="box box-solid">
+      <div class="box-header with-border">
+        <h3 class="box-title">作业管理</h3>
+      </div>
+      <div class="box-body no-padding" style="max-height: 540px;overflow-y: scroll;">
+        <div id="jobstree" class="treeview"></div>
+      </div>
+      <div class="box-footer text-center">
+        <a href="#">资源分配<i class="fa fa-server"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title col-xs-5">{{title.curr}}</h3>
+        <div class="box-tools col-xs-7">
+          <div class="has-feedback pull-right">
+            <button type="button" class="btn btn-primary btn-xs" has-permission="/jobs/jobs|DELETE" ng-disabled="!item.name" ng-click="deleteitem(item)">删除</button>&nbsp;
+            <button type="button" class="btn btn-primary btn-xs" has-permission="/jobs/runlogs|GET" ng-click="projectop('','log','作业记录:'+item.name)">记录</button>&nbsp;
+            <button type="button" class="btn btn-primary btn-xs" has-permission="/jobs/shortcut|GET" ng-click="projectop('','shortcut','执行作业:'+item.name)">快捷</button>&nbsp;
+            <button type="button" class="btn btn-primary btn-xs" has-permission="/jobrun|PUT" ng-disabled="!item.name" ng-click="projectop('','runjob','执行作业:'+item.name)">执行</button>&nbsp;
+            <!--
+            <button type="button" class="btn btn-primary btn-xs" has-permission="/jobs/jobs|PUT" ng-click="projectop('','jobs','编辑作业:'+item.name)">编辑作业</button>&nbsp;
+          -->
+          </div>
+        </div>
+      </div>
+      <div class="box-body empty" ng-switch="showme.curr">
+        <div id="jobs" ng-switch-when="jobs">
+          <form class="form-horizontal" name="itemForm">
+            <div class="box-body">
+              <div class="form-group" ng-class="{'has-success':!itemForm.name.$invalid,'has-warning':itemForm.name.$error.required}">
+                <div class="row">
+                  <label class="col-sm-2 control-label" style="font-size: 13px;">作业名称</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control input-sm" name="name" placeholder="/^[a-zA-Z][\w|\.|-]{2,}\.(sh|py|pl|yml)$/"
+                      required ng-pattern="/^[a-zA-Z][\w|\.|-]{2,}\.(sh|py|pl|yml)$/" ng-model="item.name" ng-readonly="readonly">
+                  </div>
+                  <div class="col-sm-2">
+                    <span class="help-block" ng-show="itemForm.name.$invalid"><i class="fa fa-bell-o"></i>格式匹配错误</span>
+                    <span class="help-block" ng-show="!itemForm.name.$invalid"><i class="fa fa-check"></i></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" ng-class="{'has-success':!itemForm.path1.$invalid,'has-warning':itemForm.path1.$error.required}">
+                <div class="row">
+                  <label class="col-sm-2 control-label" style="font-size: 13px;">路径</label>
+                  <div class="col-sm-3">
+                    <input type="text" class="form-control input-sm" name="path1" placeholder="1级目录必须填写"
+                      required ng-pattern="/[a-zA-Z][\w|\.|-]{2,}/" ng-model="item.path1" ng-readonly="path1readonly">
+                  </div>
+                  <div class="col-sm-1">
+                    <p class="form-control input-sm">/</p>
+                  </div>
+                  <div class="col-sm-3">
+                    <input type="text" class="form-control input-sm" name="path2" placeholder="2级目录可以为空"
+                     ng-pattern="/[a-zA-Z][\w|\.|-]{2,}/" ng-model="item.path2" ng-readonly="path2readonly">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" ng-class="{
+                'has-success':!itemForm.timeout.$invalid && !itemForm.Priority.$invalid,
+                'has-warning':itemForm.timeout.$error.required && itemForm.Priority.$error.required}">
+                <div class="row">
+                  <label class="col-xs-2 control-label" style="font-size: 13px;">超时时间</label>
+                  <div class="col-xs-2">
+                    <input type="number" class="form-control input-sm" name="timeout" placeholder="60"
+                      ng-model="item.timeout" ng-pattern="/^\d+$/">
+                  </div>
+                  <label class="col-xs-2 control-label" style="font-size: 13px;">运行优先级</label>
+                  <div class="col-xs-2">
+                    <input type="number" class="form-control input-sm" name="Priority" placeholder="19"
+                      ng-model="item.priority" min="-20" max="20">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <label class="col-xs-2 control-label" style="font-size: 13px;">执行用户</label>
+                  <div class="col-xs-3">
+                    <input type="text" class="form-control input-sm" name="user" placeholder="root"
+                      ng-model="item.user">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <label class="col-sm-2 control-label">脚本内容: </label>
+                  <div class="col-sm-9" id="code">
+                    <textarea class="form-control" id="scriptcode" name="scriptcode">
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+              <div class="col-xs-5">
+                <button type="button" class="btn btn-default" ng-click="projectop('',showme.history,title.history)">返回</button>
+              </div>
+              <div class="col-xs-2">
+                <button type="button" class="btn btn-info pull-left" ng-click="ok(!itemForm.$invalid,'jobs-release')" has-permission="/jobs/jobs:POST|/jobs/jobs:PUT" ng-disabled="item.commit_id == undefined || item.commit_id == item.commitid">发布</button>
+              </div>
+              <div class="col-xs-5">
+                <button type="button" class="btn btn-info pull-right" ng-click="ok(!itemForm.$invalid,'jobs')" has-permission="/jobs/jobs:POST|/jobs/jobs:PUT">保存</button>
+              </div>
+            </div>
+            <!-- /.box-footer -->
+          </form>
+        </div>
+        <div id="runjob" ng-switch-when="runjob">
+          <form class="form-horizontal" name="itemForm">
+            <div class="box-body">
+              <div class="form-group">
+                <div class="row">
+                  <label class="col-xs-2 control-label" style="font-size: 13px;">快捷作业名称</label>
+                  <div class="col-xs-7">
+                    <input type="text" class="form-control input-sm" name="name" placeholder="快捷作业名称"
+                      ng-model="item.name">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <label class="col-xs-2 control-label" style="font-size: 13px;">作业参数</label>
+                  <div class="col-xs-7">
+                    <input type="text" class="form-control input-sm" name="argv" placeholder="作业参数"
+                      ng-model="item.taskattr.argv">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" ng-class="{
+                'has-success':!itemForm.timeout.$invalid && !itemForm.Priority.$invalid,
+                'has-warning':itemForm.timeout.$error.required && itemForm.Priority.$error.required}">
+                <div class="row">
+                  <label class="col-xs-2 control-label" style="font-size: 13px;">超时时间</label>
+                  <div class="col-xs-2">
+                    <input type="number" class="form-control input-sm" name="timeout" placeholder="60"
+                      ng-model="item.taskattr.timeout" ng-pattern="/^\d+$/">
+                  </div>
+                  <label class="col-xs-2 control-label" style="font-size: 13px;">运行优先级</label>
+                  <div class="col-xs-2">
+                    <input type="number" class="form-control input-sm" name="Priority" placeholder="-20 ~ 20"
+                      ng-model="item.taskattr.priority">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <label class="col-xs-2 control-label" style="font-size: 13px;">执行用户</label>
+                  <div class="col-xs-3">
+                    <input type="text" class="form-control input-sm" name="user" placeholder="root"
+                      ng-model="item.taskattr.user">
+                  </div>
+                  <div >
+                    <label class="col-xs-3 control-label" style="font-size: 13px;">
+                      <input icheck type="checkbox" name="latest" ng-model="item.taskattr.latest" ng-disabled="true">
+                      新版本
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <label class="col-xs-2 control-label" style="font-size: 13px;">执行目标</label>
+                  <div class="col-xs-3" style="display:inline-block;">
+                    <input type="hidden" id="form_target_project" class="form-control bigdrop" multiple="multiple" name="targetprojects" required style="width:100%;">
+                  </div>
+                  <div class="col-xs-3">
+                    <input type="hidden" id="form_target_cluster" class="form-control bigdrop" multiple="multiple" name="targetcluster" style="width:100%;">
+                  </div>
+                  <div class="col-xs-3">
+                    <input type="hidden" id="form_target_apps" class="form-control bigdrop" multiple="multiple" name="targetapps" style="width:100%;">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+              <div class="col-xs-4">
+                <button type="button" class="btn btn-default" ng-click="projectop(data,showme.history,title.history)">返回</button>
+              </div>
+              <div class="col-xs-4">
+                <button type="button" class="btn btn-info pull-left" ng-click="ok(!itemForm.$invalid,'shortcut')" has-permission="/jobs/shortcut|POST">保存快捷方式</button>&nbsp;
+              </div>
+              <div class="col-xs-4">
+                <button type="button" class="btn btn-info pull-right" ng-click="ok(!itemForm.$invalid,'jobrun')" has-permission="/jobrun:PUT">执行</button>&nbsp;
+              </div>
+            </div>
+          </form>
+        </div>
+        <div id="itemlist" class="animate-switch" ng-switch-when="shortcut">
+          <table id="usertable" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>
+                  <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                    名称
+                    <span ng-show="sortType == 'name' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'name' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  参数
+                </th>
+                <th>
+                  目标
+                </th>
+                <th>
+                  动作
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in datalist | orderBy:page.sortType:page.sortReverse | filter:page.itemFilter | filter:paginate" select-on-click class="ng-scope">
+                <td class="name ng-scope" ng-bind="item.name"></td>
+                <td ng-bind="item.taskattr.argv"></td>
+                <td>{{item.projects.reduce(pidtoname,"")}}->{{item.clusters.reduce(cidtoname,"")}}->{{item.apps.reduce(aidtoname,"")}}</td>
+                <td><button type="button" class="btn btn-info btn-xs" ng-click="jobrunshortcut(item)" has-permission="/jobrunshortcut|GET">执行</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-sm-4">
+            <ul uib-pagination total-items="page.totalItems" ng-model="page.currentPage"
+              max-size="page.maxSize" boundary-link-numbers="true" rotate="false"
+              items-per-page="page.numPerPage" class="pagination-sm pull-left">
+            </ul>
+          </div>
+          <div class="col-sm-4">
+            <label for="usertable_length" class="pull-right" style="margin:20px 0;">每页显示的行数：
+              <select name="usertable_length" ng-model="page.numPerPage" aria-controls="usertable">
+                <option value="5" ng-selected="true" selected="yes">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <!-- 作业日志 -->
+        <div id="itemlist" class="animate-switch" ng-switch-when="log">
+          <table id="usertable" class="table table-bordered table-striped with-border">
+            <thead>
+              <tr>
+                <th>
+                  <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                    作业名称
+                    <span ng-show="sortType == 'name' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'name' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  执行人
+                </th>
+                <th>
+                  作业参数
+                </th>
+                <th>
+                  执行结果
+                </th>
+                <th>
+                  详细信息
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in datalist | orderBy:page.sortType:page.sortReverse | filter:page.itemFilter | filter:paginate" select-on-click class="ng-scope" ng-style="failedStyle(item)">
+                <td class="name ng-scope" ng-bind="item.taskname"></td>
+                <td ng-bind="item.operator"></td>
+                <td ng-bind="item.taskattr.argv"></td>
+                <td><i ng-if="item.failed == 0">成功</i><i ng-if="item.failed > 0">失败: {{ item.failed }}</i></td>
+                <td>
+                  <button type="button" class="btn btn-info btn-xs" ng-click="projectop(item,'hostslogs','作业详细日志:')" has-permission="/jobs/runlogs|GET">详细</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-sm-4">
+            <ul uib-pagination total-items="page.totalItems" ng-model="page.currentPage"
+              max-size="page.maxSize" boundary-link-numbers="true" rotate="false"
+              items-per-page="page.numPerPage" class="pagination-sm pull-left">
+            </ul>
+          </div>
+          <div class="col-sm-4">
+            <label for="usertable_length" class="pull-right" style="margin:20px 0;">每页显示的行数：
+              <select name="usertable_length" ng-model="page.numPerPage" aria-controls="usertable">
+                <option value="5" ng-selected="true" selected="yes">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <!-- 执行记录 -->
+        <div id="itemlist" class="animate-switch" ng-switch-when="hostslogs">
+          <script type="text/ng-template" id="taskattr.html">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span ng-click="$ctrl.cancel()">&times;</span></button>
+              <h4 class="modal-title">任务输出</h4>
+            </div>
+            <div class="modal-body">
+              <label class="control-label">标准输出：</lable><br/>
+              <p ng-bind-html="$ctrl.taskst.stdout"></p>
+              <label class="control-label">错误输出：</lable><br/>
+              <p ng-bind-html="$ctrl.taskst.stderr"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary pull-right" ng-click="$ctrl.cancel()">关闭</button>
+            </div>
+          </script>
+
+          <div class="row">
+            <label class="col-sm-8 control-label">作业： {{loginfo.taskattr.path}}/{{loginfo.taskattr.name}} {{loginfo.taskattr.argv}}</label>
+            <label class="col-sm-4 control-label">失败数： {{loginfo.failed}}</label>
+          </div>
+          <div class="row">
+            <label class="col-sm-4 control-label">执行人： {{loginfo.operator}}</label>
+            <label class="col-sm-4 control-label">总执行时间： {{runtime(loginfo)}}s</label>
+          </div>
+          <div class="row">
+            <label class="col-sm-4 control-label">超时时间： {{loginfo.taskattr.timeout}}</label>
+            <label class="col-sm-4 control-label">优先级： {{loginfo.taskattr.priority}}</label>
+            <label class="col-sm-4 control-label">用户： {{loginfo.taskattr.user}}</label>
+          </div>
+          <div class="row">
+            <label class="col-sm-12 control-label">作业时间： {{newdate(loginfo.begintime).format("%Y年%m月%d日 %H:%M:%S")}}</label>
+          </div>
+          <table id="usertable" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>
+                  <a href="#" ng-click="sortType = 'hostname'; sortReverse = !sortReverse">
+                    主机名称
+                    <span ng-show="sortType == 'hostname' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'hostname' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  别名
+                </th>
+                <th>
+                  作业
+                </th>
+                <th>
+                  状态码
+                  <span ng-show="sortType == 'code' && !sortReverse"
+                    class="fa fa-caret-down">
+                  </span>
+                  <span ng-show="sortType == 'code' && sortReverse"
+                    class="fa fa-caret-up">
+                  </span>
+                </a>
+                </th>
+                <th>
+                  执行时间
+                </th>
+                <th>
+                  资源使用
+                </th>
+                <th>
+                  输出信息
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-ng-repeat-start="item in loginfo.hostlogs" select-on-click class="ng-scope" ng-style="failedStyleHlog(item.jobs[0])">
+                <td class="name ng-scope" ng-bind="item.hostname" rowspan="{{item.jobs.length}}"></td>
+                <td ng-bind="item.jobs[0].alias"></td>
+                <td ng-bind="item.jobs[0].name"></td>
+                <td ng-bind="item.jobs[0].code"></td>
+                <td>{{item.jobs[0].runtime/1000}}</td>
+                <td>{{(item.jobs[0].usedcpu/100).toFixed(2)}}%|{{item.jobs[0].usedmem}}MB</td>
+                <td>
+                  <button type="button" class="btn btn-info btn-xs"
+                    ng-click="joblogsdetail(item.jobs[0])" ng-if="item.jobs[0].stdout != '' && item.jobs[0].stderr !=''">
+                    详细
+                  </button>
+                </td>
+              </tr>
+              <tr data-ng-repeat-end ng-repeat="job in item.jobs" select-on-click class="ng-scope" ng-style="failedStyleHlog(job)" ng-hide="$first">
+                <td ng-bind="job.alias"></td>
+                <td ng-bind="job.name"></td>
+                <td ng-bind="job.code"></td>
+                <td>{{job.runtime/1000}}{{$index}}</td>
+                <td>{{(job.usedcpu/100).toFixed(2)}}%|{{job.usedmem}}MB</td>
+                <td>
+                  <button type="button" class="btn btn-info btn-xs"
+                    ng-click="joblogsdetail(job)" ng-if="job.stdout != '' && job.stderr !=''">
+                    详细
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-sm-4">
+            <ul uib-pagination total-items="page.totalItems" ng-model="page.currentPage"
+              max-size="page.maxSize" boundary-link-numbers="true" rotate="false"
+              items-per-page="page.numPerPage" class="pagination-sm pull-left">
+            </ul>
+          </div>
+          <div class="col-sm-4">
+            <label for="usertable_length" class="pull-right" style="margin:20px 0;">每页显示的行数：
+              <select name="usertable_length" ng-model="page.numPerPage" aria-controls="usertable">
+                <option value="5" ng-selected="true" selected="yes">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

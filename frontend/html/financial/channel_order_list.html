@@ -1,0 +1,88 @@
+<!--用户管理  ->  展示列表-->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">渠道订单管理</h3>
+
+                <div class="box-tools"></div>
+            </div>
+            <div class="clearfix">
+                <div style="float: right; padding:0 15px;">
+                    <div style="float: left;margin-right:10px;padding-bottom:10px;" has-permission="btn:fos:data:channelorder:insert">
+                        <a href="/channelorderadd" class="btn btn-info btn-sm" data-reveal-id="add-label-myModal" data-animation="fade"><i class="fa fa-plus"></i></a>
+                    </div>
+                    <div class="input-group input-group-sm" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="订单名称..." ng-keypress="enter($event)" ng-model="input.parammap.orderName">
+                    </div>
+                    <div class="input-group input-group-sm" style="width:180px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="渠道简称..." ng-keypress="enter($event)" ng-model="input.parammap.channelName">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" ng-click="pageChanged(1)"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div ng-switch="tablestatus">
+                <div class="box-body table-responsive no-padding" ng-switch-when="1">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>渠道订单Id</th>
+                                <th>订单Id</th>
+                                <th>订单名称</th>
+                                <th>订单状态</th>
+                                <th>接入单价</th>
+                                <th>渠道Id</th>
+                                <th>渠道简称</th>
+                                <th>渠道状态</th>
+                                <th>外放单价</th>
+                                <th>渠道订单状态</th>
+                                <th>关联的活动Id</th>
+                                <th>自动读取标识</th>
+                                <th>预付款</th>
+                                <th class="numeric">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="orderchannel in datalist" >
+                                <td>{{$index+1}}</td>
+                                <td ng-bind="orderchannel.channelOrderId"></td>
+                                <td ng-bind="orderchannel.orderId"></td>
+                                <td ng-bind="orderchannel.orderName"></td>
+                                <td ng-bind="orderchannel.orderStatus | statusfilter:orderchannel.orderStatus"></td>
+                                <td ng-bind="orderchannel.payUnit|currency : '￥'"></td>
+                                <td ng-bind="orderchannel.channelId" ></td>
+                                <td ng-bind="orderchannel.channelName"></td>
+                                <td ng-bind="orderchannel.channelStatus | statusfilter:orderchannel.channelStatus"></td>
+                                <td ng-bind="orderchannel.outerUnit|currency : '￥' | emptyfilter:orderchannel.outerUnit"></td>
+                                <td ng-bind="orderchannel.status | statusfilter:orderchannel.status"></td>
+                                <td ng-bind="orderchannel.relationId | emptyfilter:orderchannel.relationId"></td>
+                                <td ng-bind="orderchannel.autoflag | autoflagfilter:orderchannel.autoflag"></td>
+                                <td ng-bind="orderchannel.advancePay|currency : '￥'|emptyfilter"></td>
+                                <td class="numeric" valign="middle">
+                                    <a href="/channelorderupdate/{{orderchannel.channelOrderId}}" class="btn btn-primary btn-xs"
+                                       has-permission="btn:fos:data:channelorder:update">修改</a>
+                                    <!--<a href="javascript:;" ng-click="deleteuser(user)" >&nbsp;|&nbsp;删除</a>-->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-body table-responsive no-padding" ng-switch-when="2">
+                    <center style="padding:20px 0;">无数据 .....</center>
+                </div>
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer clearfix">
+                <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="pagesize" max-size="maxSize" rotate="true" ng-change="pageChanged()" boundary-links="true" class="pagination pagination-sm no-margin pull-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                                last-text="&raquo;"></uib-pagination>
+            </div>
+        </div>
+        <!-- /.box -->
+    </div>
+</div>

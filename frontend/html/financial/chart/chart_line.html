@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div style="padding-top:20px;">
+    <div class="portlet box blue" style="display: block">
+        <div class="portlet-title">
+            <div class="caption"><i class=""></i>线型图</div>
+        </div>
+        <div class="portlet-body flip-scroll">
+
+            <div class="clearfix">
+                <div class="btn-group" >
+                    <a href="javascript:;" ng-click="pageChanged(1)" class="btn green big-link" data-reveal-id="add-label-myModal" data-animation="fade" >
+                        按客户统计
+                    </a>
+                </div>
+                <div class="btn-group" >
+                    <a href="javascript:;" ng-click="pageChanged(2)" class="btn green big-link" data-reveal-id="add-label-myModal" data-animation="fade" >
+                        按渠道统计
+                    </a>
+                </div>
+                <div class="btn-group" >
+                    <a href="javascript:;" ng-click="pageChanged(3)" class="btn green big-link" data-reveal-id="add-label-myModal" data-animation="fade" >
+                        按负责人统计
+                    </a>
+                </div>
+                <div class="btn-group pull-right">
+                    <div action="#" class="form-search">
+                        <div class="input-append">
+
+                            <div class="input-group input-group-sm" style="float: left;margin-right:10px;padding-bottom:10px;">
+                                <select name=""  class="col-md-3 form-control pull-right"  ng-model="input.parammap.name"  ng-options="select.name as select.name for select in selectList" >
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+
+                            <!--<input ui-date="dateOptions" class="col-md-3"  placeholder="开始时间..."   ng-model="input.parammap.beginTime">
+                            <input ui-date="dateOptions" class="col-md-3"  placeholder="结束时间..."   ng-model="input.parammap.endTime">-->
+                            <div class="input-group input-group-sm" style="width:220px; float: left;margin-right:10px;padding-bottom:10px;">
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                <input type="daterange" name="" class="form-control pull-right active" ng-model="dates4" ranges="ranges">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="pageChanged()"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+                <div id="container"  style="min-width:700px;height:400px">
+                </div>
+        </div>
+        <div class="box-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()">返回柱形图</button>
+        </div>
+
+    </div>
+</div>
+</body>
+    <script  src="js/plugins/Highcharts/highcharts.js"></script>
+</html>

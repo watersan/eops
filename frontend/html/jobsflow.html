@@ -1,0 +1,288 @@
+
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box box-primary">
+      <div class="box-header">
+        <h3 class="box-title">{{title.curr}}</h3>
+      </div>
+      <div class="box-body table-responsive no-padding" ng-switch="showme.curr">
+        <div id="flowlist" ng-switch-when="list">
+          <div class="clearfix">
+            <div style="float: right; padding:0 15px;">
+              <div has-permission="/jobs/flow:POST" style="float: left;margin-right:10px;padding-bottom:10px;">
+                <a href="javascript:;"  class="btn btn-sm" ng-click="changeview('add','')">
+                  <i class="fa fa-plus fa-2x"></i>
+                </a>
+              </div>
+            </div>
+            <div class="input-group input-group-sm" style="width:180px;padding-bottom:10px;padding-left:10px;">
+              <input type="text" class="form-control pull-right"
+                placeholder="查找..."
+                ng-model="page.itemFilter">
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <table id="usertable" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>
+                  <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                    作业流
+                    <span ng-show="sortType == 'name' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'name' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a href="#" ng-click="sortType = 'modifytime'; sortReverse = !sortReverse">
+                    修改时间
+                    <span ng-show="sortType == 'modifytime' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'modifytime' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a href="#" ng-click="sortType = 'createtime'; sortReverse = !sortReverse">
+                    创建时间
+                    <span ng-show="sortType == 'createtime' && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == 'createtime' && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  操作
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in datalist | orderBy:page.sortType:page.sortReverse | filter:page.itemFilter | filter:paginate" select-on-click class="ng-scope">
+                <td class="name ng-scope" ng-bind="item.name"></td>
+                <td>{{newdate(item.modifytime).format("%Y年%m月%d日 %H:%M:%S")}}</td>
+                <td>{{newdate(item.createtime).format("%Y年%m月%d日 %H:%M:%S")}}</td>
+                <td class="numeric" valign="middle">
+                  <a href="javascript:;" ng-click="changeview('info',item)" has-permission="/jobs/flow:GET" class="btn btn-primary btn-xs">查看</a>&nbsp;&nbsp;
+                  <a href="javascript:;" ng-click="changeview('update',item)" has-permission="/jobs/flow:PUT" class="btn btn-primary btn-xs">修改</a>&nbsp;&nbsp;
+                  <a href="javascript:;" ng-click="deleteitem(item)" has-permission="/jobs/flow:DELETE" class="btn btn-danger btn-xs">删除</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-sm-4">
+            <ul uib-pagination total-items="page.totalItems" ng-model="page.currentPage"
+              max-size="page.maxSize" boundary-link-numbers="true" rotate="false"
+              items-per-page="page.numPerPage" class="pagination-sm pull-left">
+            </ul>
+          </div>
+          <div class="col-sm-4">
+            <label for="usertable_length" class="pull-right" style="margin:20px 0;">每页显示的行数：
+              <select name="usertable_length" ng-model="page.numPerPage" aria-controls="usertable">
+                <option value="5" ng-selected="true" selected="yes">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <div class="box-body table-responsive no-padding" ng-switch-when="nodata">
+          <center style="padding:20px 0;">无数据 .....</center>
+        </div>
+
+        <div id="flowchange" class="col-xs-12" ng-switch-when="add|info|update" ng-switch-when-separator="|">
+          <form class="form-horizontal" name="itemForm">
+            <div class="form-group" ng-class="{'has-success':!itemForm.name.$invalid,'has-warning':itemForm.name.$error.required}">
+              <div class="row col-xs-12">
+                <label class="col-sm-2 control-label" style="font-size: 13px;">名称</label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control input-sm" name="name" placeholder=""
+                    required ng-model="item.name" ng-readonly="readonly">
+                </div>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{'has-success':!itemForm.job.$invalid,'has-warning':itemForm.job.$error.required}">
+              <div class="row col-xs-12">
+                <label class="col-sm-2 control-label" style="font-size: 13px;">描述</label>
+                <div class="col-sm-7">
+                  <textarea class="form-control" id="describe" name="describe" ng-model="item.describe" ng-readonly="readonly"></textarea>
+                </div>
+              </div>
+            </div>
+          </form>
+          <script type="text/ng-template" id="taskattr.html">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span ng-click="$ctrl.cancel()">&times;</span></button>
+              <h4 class="modal-title">任务属性</h4>
+            </div>
+            <div class="modal-body">
+              <form class="form-horizontal eventInsForm" name="stepForm">
+                <div class="form-group" ng-class="{'has-success':!stepForm.name.$invalid,'has-warning':stepForm.name.$error.required}">
+                  <div class="row col-xs-12">
+                    <label class="col-sm-2 control-label" style="font-size: 13px;">任务别名</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control input-sm" name="name" placeholder=""
+                        required ng-model="$ctrl.step.alias" ng-readonly="$ctrl.taskst.readonly">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!stepForm.jobname.$invalid,'has-warning':stepForm.jobname.$error.required}">
+                  <div class="row col-xs-12">
+                    <label class="col-sm-2 control-label" style="font-size: 13px;">作业</label>
+                    <div class="col-sm-7">
+                      <input type="text" id="jobselector" class="form-control input-sm keywork-input" name="jobname"
+                        required ng-model="$ctrl.step.job" ng-readonly="$ctrl.taskst.readonly">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row col-xs-12">
+                    <label class="col-sm-2 control-label" style="font-size: 13px;">参数</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control input-sm" name="jobargv" placeholder=""
+                       ng-model="$ctrl.step.argv" ng-readonly="$ctrl.taskst.readonly">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row col-xs-12">
+                    <label class="col-xs-2 control-label" style="font-size: 13px;">超时时间</label>
+                    <div class="col-xs-2">
+                      <input type="number" class="form-control input-sm" name="timeout" placeholder="60"
+                        ng-model="$ctrl.step.timeout" ng-readonly="$ctrl.taskst.readonly">
+                    </div>
+                    <label class="col-xs-2 control-label" style="font-size: 13px;">运行优先级</label>
+                    <div class="col-xs-2">
+                      <input type="number" class="form-control input-sm" name="Priority" min="-20" max="20"
+                        placeholder="19" ng-model="$ctrl.step.pri" ng-readonly="$ctrl.taskst.readonly">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row col-xs-12">
+                    <label class="col-xs-2 control-label" style="font-size: 13px;">用户</label>
+                    <div class="col-xs-2">
+                      <input type="text" class="form-control input-sm" name="user" placeholder="root"
+                        ng-model="$ctrl.step.user" ng-readonly="$ctrl.taskst.readonly">
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left" ng-click="$ctrl.cancel()">关闭</button>
+              <button type="button" class="btn btn-danger" ng-click="$ctrl.delete()" ng-disabled="$ctrl.taskst.nodel">删除</button>
+              <button type="button" class="btn btn-primary" ng-click="$ctrl.addstep(false)" ng-disabled="$ctrl.taskst.noNext">下一步</button>
+              <button type="button" class="btn btn-primary" ng-click="$ctrl.addstep(true)" ng-disabled="$ctrl.taskst.noRescue">失败处理</button>
+              <button type="button" class="btn btn-primary" ng-click="$ctrl.ok(!stepForm.$invalid)">保存</button>
+            </div>
+          </script>
+          <!-- <div class="modal fade" id="taskattr" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">任务属性</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-horizontal eventInsForm" name="stepForm">
+                    <div class="form-group" ng-class="{'has-success':!stepForm.name.$invalid,'has-warning':stepForm.name.$error.required}">
+                      <div class="row col-xs-12">
+                        <label class="col-sm-2 control-label" style="font-size: 13px;">任务别名</label>
+                        <div class="col-sm-7">
+                          <input type="text" class="form-control input-sm" name="name" placeholder=""
+                            required ng-model="step.alias" ng-readonly="readonly">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-success':!stepForm.jobname.$invalid,'has-warning':stepForm.jobname.$error.required}">
+                      <div class="row col-xs-12">
+                        <label class="col-sm-2 control-label" style="font-size: 13px;">作业</label>
+                        <div class="col-sm-7">
+                          <input type="text" id="jobselector" class="form-control input-sm keywork-input" name="jobname"
+                            required ng-model="step.job" ng-readonly="readonly">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row col-xs-12">
+                        <label class="col-sm-2 control-label" style="font-size: 13px;">参数</label>
+                        <div class="col-sm-7">
+                          <input type="text" class="form-control input-sm" name="jobargv" placeholder=""
+                           ng-model="step.argv" ng-readonly="readonly">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row col-xs-12">
+                        <label class="col-xs-2 control-label" style="font-size: 13px;">超时时间</label>
+                        <div class="col-xs-2">
+                          <input type="number" class="form-control input-sm" name="timeout" placeholder="60"
+                            ng-model="step.timeout">
+                        </div>
+                        <label class="col-xs-2 control-label" style="font-size: 13px;">运行优先级</label>
+                        <div class="col-xs-2">
+                          <input type="number" class="form-control input-sm" name="Priority" min="-20" max="20"
+                            ng-model="step.pri">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row col-xs-12">
+                        <label class="col-xs-2 control-label" style="font-size: 13px;">用户</label>
+                        <div class="col-xs-2">
+                          <input type="text" class="form-control input-sm" name="user" placeholder=""
+                            ng-model="step.user">
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+                  <button type="button" class="btn btn-primary" ng-click="addstep(false)" ng-disabled="isRescue">下一步</button>
+                  <button type="button" class="btn btn-primary" ng-click="addstep(true)" ng-disabled="isRescue">失败处理</button>
+                  <button type="button" class="btn btn-primary" ng-click="save(!stepForm.$invalid)">保存</button>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <div id="jobsflow">
+            <div class="none node" id="node-templates" data-container="body" data-placement="top" data-html="true" data-trigger="hover">
+              <div class="node-container">
+                <span class="node-text"></span>
+              </div>
+            </div>
+            <div class="flow_box" style="height:400px;" class="col-xs-6"></div>
+          </div>
+        </div>
+        <!-- box-body -->
+      </div>
+      <div class="box-footer empty" ng-switch="showme.curr">
+        <div id="change-footer" class="animate-switch">
+          <div class="pull-left" style="margin:0 20px;" ng-switch-when="info|add|update" ng-switch-when-separator="|">
+            <button type="button" class="btn btn-default" ng-click='changeview(showme.history,"")'>返回</button>
+          </div>
+          <div class="pull-right" style="margin:0 20px;" ng-switch-when="add|update" ng-switch-when-separator="|">
+            <button type="button" class="btn btn-primary" ng-click="ok(!itemForm.$invalid)">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

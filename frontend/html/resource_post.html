@@ -1,0 +1,174 @@
+<!--系统设置  ->  用户添加-->
+<div class="row">
+    <div class="col-md-9">
+        <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{action}}资源</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" name="userForm">
+              <div class="box-body">
+                <div class="form-group" ng-class="{'has-success':!userForm.hostid.$invalid,
+                  'has-warning':userForm.hostid.$error.required,
+                  'has-error':(!userForm.hostid.$error.required) && userForm.hostid.$invalid}">
+                  <!--正确 has-success 错误 has-error 预警 has-warning-->
+                  <label class="col-sm-2 control-label">主机ID</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="hostid" placeholder="" required ng-pattern="/^[\w\_\-]{4,}$/" ng-model="item.hostid" ng-readonly="updatereadonly">
+                      </div>
+                      <div class="col-sm-2">
+                        <span class="help-block" ng-show="userForm.hostid.$error.required"><i class="fa fa-bell-o"></i></span>
+                        <span class="help-block" ng-show="!userForm.hostid.$invalid"><i class="fa fa-check"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">主机名称</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="hostname" placeholder="" required ng-model="item.hostname" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!userForm.ip.$invalid,
+                  'has-warning':userForm.ip.$error.required,
+                  'has-error':(!userForm.ip.$error.required) && userForm.ip.$invalid}">
+                  <label class="col-sm-2 control-label">IP</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="ip" placeholder="" ng-model="item.ip" required ng-pattern="/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:?\d*$/" ng-readonly="readonly">
+                      </div>
+                      <div class="col-sm-2">
+                        <span class="help-block" ng-show="userForm.ip.$error.required"><i class="fa fa-bell-o"></i></span>
+                        <span class="help-block" ng-show="!userForm.ip.$invalid"><i class="fa fa-check"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!userForm.eip.$invalid,
+                  'has-warning':userForm.eip.$error.required,
+                  'has-error':(!userForm.eip.$error.required) && userForm.eip.$invalid}">
+                  <label class="col-sm-2 control-label">EIP</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="eip" placeholder="" ng-model="item.eip" ng-pattern="/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:?\d*$/" ng-readonly="readonly">
+                      </div>
+                      <div class="col-sm-2">
+                        <span class="help-block" ng-show="userForm.eip.$error.required"><i class="fa fa-bell-o"></i></span>
+                        <span class="help-block" ng-show="!userForm.eip.$invalid"><i class="fa fa-check"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">位置</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <select ng-model="item.location" ng-disabled="readonly">
+                          <option ng-repeat="svc in svcproviders" value="{{svc.name}}">{{svc.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!userForm.cpu.$invalid,
+                  'has-warning':userForm.cpu.$error.required,
+                  'has-error':(!userForm.cpu.$error.required) && userForm.cpu.$invalid}">
+                  <label class="col-sm-2 control-label">CPU</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="number" class="form-control input-sm" name="cpu" placeholder="CPU核数" ng-pattern="/^\d+$/" ng-model="item.cpu" ng-readonly="readonly">
+                      </div>
+                      <div class="col-sm-2">
+                        <span class="help-block" ng-show="userForm.cpu.$error.required"><i class="fa fa-bell-o"></i></span>
+                        <span class="help-block" ng-show="!userForm.cpu.$invalid"><i class="fa fa-check"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!userForm.memory.$invalid,
+                  'has-warning':userForm.memory.$error.required,
+                  'has-error':(!userForm.memory.$error.required) && userForm.memory.$invalid}">
+                  <label class="col-sm-2 control-label">内存</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="number" class="form-control input-sm" name="memory" placeholder="单位为MB" ng-pattern="/^\d+$/" ng-model="item.memory" ng-readonly="readonly">
+                      </div>
+                      <div class="col-sm-2">
+                        <span class="help-block" ng-show="userForm.memory.$error.required"><i class="fa fa-bell-o"></i></span>
+                        <span class="help-block" ng-show="!userForm.memory.$invalid"><i class="fa fa-check"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!userForm.disk.$invalid,
+                  'has-warning':userForm.disk.$error.required,
+                  'has-error':(!userForm.disk.$error.required) && userForm.disk.$invalid}">
+                  <label class="col-sm-2 control-label">磁盘</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="disk" placeholder="/:20G;/data:100G" ng-pattern="/^\/:\d+G(;?\/[\w\/]+:\d+G)*$/" ng-model="item.disk" ng-readonly="readonly">
+                      </div>
+                      <div class="col-sm-2">
+                        <span class="help-block" ng-show="userForm.memory.$error.required"><i class="fa fa-bell-o"></i></span>
+                        <span class="help-block" ng-show="!userForm.memory.$invalid"><i class="fa fa-check"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">操作系统</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="os" placeholder="" ng-model="item.os" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">系统版本</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="osver" placeholder="" ng-model="item.osver" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">环境</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <select ng-model="item.environment" ng-disabled="readonly">
+                          <option ng-repeat="env in cdenv" value="{{env}}">{{Environment[env]}}</option>
+                        </select>
+                        <input type="hidden" class="form-control input-sm" name="status" value="0" ng-model="item.status">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" class="btn btn-default" ng-click="jumpto()">返回列表</button>
+                <button type="button" class="btn btn-info pull-right" ng-click="ok(!userForm.$invalid)">保存</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+    </div>
+</div>

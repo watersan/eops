@@ -1,0 +1,96 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">{{cmdbname}}列表</h3>
+      </div>
+      <div class="clearfix">
+        <div style="float: right; padding:0 15px;">
+          <div style="float: left;margin-right:10px; padding-bottom:10px;">
+            <div class="dropdown" ng-show="allowCustomFields">
+              <a href='#' data-target="#" id="customFields" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="btn btn-sm">
+                <i class="fa fa-cog fa-2x"></i>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="customFields" style="right: 0; left: auto;">
+                <li ng-repeat="field in fields" style="float: left; width: 60%;">
+                  <input icheck type="checkbox" name="customFields" ng-model="cmdbitems[cmdbnameid]['fields'][$index].display">&nbsp;&nbsp;{{field.name}}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div has-permission="{{thedata.addperm}}" style="float: left;margin-right:10px; padding-bottom:10px;">
+            <a href="{{thedata.addurl}}"  class="btn btn-sm">
+              <i class="fa fa-plus fa-2x"></i>
+            </a>
+          </div>
+        </div>
+			  <div class="input-group input-group-sm" style="width:180px; padding-bottom:10px;">
+          <input type="text" class="form-control pull-right"
+            placeholder="搜索..." ng-model="itemFilter">
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div ng-switch="tablestatus">
+        <div class="box-body" ng-switch-when="1">
+          <table id="liststable" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th><input type="checkbox" ng-click="doSelectAll()" class="ng-pristine ng-untouched ng-valid ng-scope"></th>
+                <th ng-repeat="field in fields | filter:checkdisplay">
+                  <a href="#" ng-click="sortBy(field.nameid)">
+                    {{field.name}}
+                    <span ng-show="sortType == field.nameid && !sortReverse"
+                      class="fa fa-caret-down">
+                    </span>
+                    <span ng-show="sortType == field.nameid && sortReverse"
+                      class="fa fa-caret-up">
+                    </span>
+                  </a>
+                </th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in items | filter:itemFilter | filter:paginate" select-on-click class="ng-scope">
+                <td><input type="checkbox" ng-model="item.selected" class="flat-redi ng-pristine ng-untouched ng-valid"></td>
+                <td ng-repeat="field in fields | filter:checkdisplay" ng-bind="item[field.nameid]">
+                <td valign="middle">
+                  <a href="{{thedata.operations[0].href}}{{item._id}}" has-permission="{{thedata.operations[0].perm}}" class="btn btn-default btn-xs">{{thedata.operations[0].name}}</a>&nbsp;&nbsp;
+                  <a href="{{thedata.operations[1].href}}{{item._id}}" has-permission="{{thedata.operations[1].perm}}" class="btn btn-default btn-xs">{{thedata.operations[1].name}}</a>&nbsp;&nbsp;
+                  <a href="#" ng-click="deleteitem(item)" has-permission="{{thedata.operations[2].perm}}" class="btn btn-danger btn-xs">{{thedata.operations[2].name}}</a>&nbsp;&nbsp;
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="box-body table-responsive no-padding" ng-switch-when="2">
+          <center style="padding:20px 0;">无数据 .....</center>
+        </div>
+      </div>
+
+      <div class="box-footer clearfix">
+        <div class="col-sm-6">
+          <ul uib-pagination total-items="totalItems" ng-model="currentPage"
+            max-size="maxSize" boundary-link-numbers="true" rotate="false"
+            items-per-page="numPerPage" class="pagination-sm pull-left">
+          </ul>
+        </div>
+        <div class="col-sm-6">
+          <label for="liststable_length" class="pull-right" style="margin:20px 0;">每页显示的行数：
+            <select name="liststable_length" ng-model="numPerPage" aria-controls="liststable">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

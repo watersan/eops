@@ -1,0 +1,209 @@
+<!--系统设置 -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{action}}应用模版</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" name="userForm">
+              <div class="box-body">
+                <div class="form-group" ng-class="{'has-success':!userForm.name.$invalid,
+                  'has-warning':userForm.name.$error.required,
+                  'has-error':(!userForm.name.$error.required) && userForm.name.$invalid}">
+                  <!--正确 has-success 错误 has-error 预警 has-warning-->
+                  <label class="col-sm-2 control-label">名称</label>
+
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="name" placeholder="请输入模版名称" required ng-pattern="/^.{2,}$/" ng-model="item.name" ng-readonly="updatereadonly">
+                      </div>
+                      <div class="col-sm-2">
+                        <span class="help-block" ng-show="userForm.name.$error.required"><i class="fa fa-bell-o"></i>请输入模版名称</span>
+                        <span class="help-block" ng-show="!userForm.name.$invalid"><i class="fa fa-check"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">配置文件</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="config" placeholder="gitlab仓库名称" ng-model="item.config" ng-readonly="readonly">
+                      </div>
+                      <div class="col-sm-2">
+                        <button type="button" class="btn btn-info btn-xs">文件管理</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="form-group">
+                  <label class="col-sm-2 control-label">配置加载</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="reload" placeholder="" ng-model="item.reload" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">配置校验</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="configverify" placeholder="" ng-model="item.configverify" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">构建脚本</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="build" placeholder="" ng-model="item.build" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">安装源</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <div class="input-group">
+                          <div class="input-group-btn">
+                            <button type="button" class="btn btn-info form-control dropdown-toggle " data-toggle="dropdown">{{item.sourcetype}}
+                              <span class="fa fa-caret-down"></span></button>
+                            <ul class="dropdown-menu">
+                              <li><a href="#" ng-click="item.sourcetype='HTTP'">HTTP</a></li>
+                              <li><a href="#" ng-click="item.sourcetype='GIT'">GIT</a></li>
+                              <li><a href="#" ng-click="item.sourcetype='SVN'">SVN</a></li>
+                            </ul>
+                          </div>
+                          <input type="text" class="form-control" name="source" placeholder="" ng-model="item.source" ng-readonly="readonly">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">安装脚本</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="install" placeholder="" ng-model="item.install" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">安装之前</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="preinstall" placeholder="" ng-model="item.preinstall" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">安装之后</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="postinstall" placeholder="" ng-model="item.postinstall" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">回滚</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="rollback" placeholder="" ng-model="item.rollback" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">进程名称</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="process" placeholder="" ng-model="item.process" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!userForm.port.$invalid,
+                  'has-error':userForm.port.$invalid}">
+                  <label class="col-sm-2 control-label">端口</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="port" placeholder="例如: tcp/80,udp/53,mysql/tcp/3307" ng-pattern="/^(,?\w*/?(tcp|udp)/\d+)+$/" ng-model="item.port" ng-readonly="readonly">
+                      </div>
+                      <div class="col-sm-2">
+                        <span class="help-block" ng-show="userForm.port.$invalid"><i class="fa fa-bell-o"></i>端口格式无效</span>
+                        <span class="help-block" ng-show="!userForm.port.$invalid && item.port.length > 0"><i class="fa fa-check"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">附加配置</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="additionconf" placeholder="允许增加配置文件的相对路径。" ng-model="item.additionconf" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">配置文件路径</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="confpath" placeholder="配置文件路径，基于安装目录的相对路径" ng-model="item.confpath" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">监控</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control input-sm" name="monitor" placeholder="" ng-model="item.monitor" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">依赖</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div id="formdepend" class="col-sm-8">
+                        <input type="text" class="form-control keywork-input" name="depend" placeholder="" ng-model="item.depend" ng-readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" class="btn btn-default" ng-click="jumpto()">返回列表</button>
+                <button type="button" class="btn btn-info pull-right" ng-click="ok(!userForm.$invalid)" ng-disabled="readonly">保存</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+    </div>
+</div>

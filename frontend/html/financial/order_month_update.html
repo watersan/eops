@@ -1,0 +1,145 @@
+<!--订单对账管理  ->  订单对账修改-->
+<div class="row">
+    <div class="col-md-9">
+        <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">订单对账修改</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" name="orderMonthForm">
+              <div class="box-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">订单Id</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="订单Id"  ng-model="ordermonth.orderId" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">订单名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="订单名称"  ng-model="ordermonth.orderName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">产品名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="产品名称"  ng-model="ordermonth.productName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">负责人</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="负责人名称"  ng-model="ordermonth.directorName" >
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">运营数据</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="运营数据" ng-model="ordermonth.oCountSum">
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">运营收入</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text" ng-disabled=true  class="form-control input-sm" placeholder="运营收入" ng-model="ordermonth.oAmountSum">
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':orderMonthForm.oCount.$valid,'has-warning':!orderMonthForm.oCount.$valid}">
+                    <label class="col-sm-2 control-label">对账数据</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number" name="oCount" class="form-control input-sm" placeholder="对账数据" ng-model="ordermonth.oCount" ng-pattern="/^[0-9]\d*$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!orderMonthForm.oCount.$valid"><i class="fa fa-bell-o"></i>请输入非负整数</span>
+                                <span class="help-block" ng-show="orderMonthForm.oCount.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':orderMonthForm.oAmount.$valid,'has-warning':!orderMonthForm.oAmount.$valid}">
+                    <label class="col-sm-2 control-label">对账收入</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number" name="oAmount"  class="form-control input-sm" placeholder="对账收入" ng-model="ordermonth.oAmount"  ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!orderMonthForm.oAmount.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="orderMonthForm.oAmount.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':orderMonthForm.cut.$valid,'has-warning':!orderMonthForm.cut.$valid}">
+                    <label class="col-sm-2 control-label">核减收入</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number" name="cut"  class="form-control input-sm" placeholder="核减收入" ng-model="ordermonth.cut" ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!orderMonthForm.cut.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="orderMonthForm.cut.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':orderMonthForm.saleRebate.$valid,'has-warning':!orderMonthForm.saleRebate.$valid}">
+                    <label class="col-sm-2 control-label">销售返点</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="number"  name="saleRebate" class="form-control input-sm" placeholder="销售返点" ng-model="ordermonth.saleRebate" ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="!orderMonthForm.saleRebate.$valid"><i class="fa fa-bell-o"></i>请输入非负数</span>
+                                <span class="help-block" ng-show="orderMonthForm.saleRebate.$valid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">返回列表</button>
+                <button type="button" class="btn btn-info pull-right" ng-click="ok(!orderMonthForm.$invalid)" ng-disabled="orderMonthForm.$invalid">保存</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+    </div>
+</div>

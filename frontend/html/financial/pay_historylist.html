@@ -1,0 +1,77 @@
+<!--付款管理  ->  付款历史列表-->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">付款历史</h3>
+                <div class="box-tools"></div>
+            </div>
+            <div class="clearfix">
+                <div style="float: right; padding:0 15px;">
+                    
+                    <div class="input-group input-group-sm" style="width:220px;float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" placeholder="渠道订单名称..." ng-keypress="enter($event)" ng-model="input.parammap.channelOrderName" class="form-control">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" ng-click="pageChanged(1)"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="btn-group" has-permission="btn:fos:finance:receive:shoupiaohistory:fukuanhistory:export" style="float: left;padding-bottom:10px;">
+                        <form action={{urlexport}} method="post" >
+                        <!--<form action=" http://192.168.1.34:8081/adv-business-service/order/exportPayHistoryList" method="post" >-->
+                            <input class="form-control input-sm"  name="channelOrderName" value="{{input.parammap.channelOrderName}}" type="hidden">
+                            <input class="form-control input-sm" name="pageNo" value="1"  type="hidden">
+                            <input class="form-control input-sm" name="pageSize" value="-1" type="hidden">
+                            <input class="form-control input-sm" name="status" value="1" type="hidden">
+                            <button type="submit" class="btn btn-primary btn-sm">导出</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+            <div ng-switch="tablestatus">
+                <div class="box-body table-responsive no-padding" ng-switch-when="1">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>渠道订单</th>
+                                <th>票据号</th>
+                                <th>收票单位</th>
+                                <th >票面金额</th>
+                                <th >结算状态</th>
+                                <th>收票日期</th>
+                                <th>付款金额</th>
+                                <th>付款日期</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="receiveorder in datalist" >
+                                <td>{{$index+1}}</td>
+                                <td ng-bind="receiveorder.channelOrderName"></td>
+                                <td ng-bind="receiveorder.ticketNum"></td>
+                                <td ng-bind="receiveorder.company"></td>
+                                <td ng-bind="receiveorder.money|currency : '￥'"></td>
+                                <td ng-bind="receiveorder.status|ticketStatusfilter:receiveorder.status"></td>
+                                <td ng-bind="receiveorder.dataTime|date:'yyyy-MM-dd'"></td>
+                                <td ng-bind="receiveorder.payMoney|currency : '￥'"></td>
+                                <td ng-bind="receiveorder.payDate|date:'yyyy-MM-dd'"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-body table-responsive no-padding" ng-switch-when="2">
+                    <center style="padding:20px 0;">无数据 .....</center>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="pagesize" max-size="maxSize" rotate="true" ng-change="pageChanged()" boundary-links="true" class="pagination pagination-sm no-margin pull-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                                    last-text="&raquo;"></uib-pagination>                    
+            </div>
+        </div>
+        <!-- /.box -->
+    </div>
+</div>

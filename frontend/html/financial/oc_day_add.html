@@ -1,0 +1,156 @@
+<!--订单管理  ->  增加订单-->
+<style>
+label.custom-checkbox, label.custom-radio {
+  padding-right: 0;
+  padding-left: 0;
+  margin-bottom: 0; }
+  label.custom-checkbox > input, label.custom-radio > input {
+    height: 0;
+    z-index: -100 !important;
+    opacity: 0;
+    position: absolute; }
+    label.custom-checkbox > input:checked + span:before, label.custom-radio > input:checked + span:before {
+      content: "\f00c";
+      font-weight: 300;
+      }
+    label.custom-checkbox > input:disabled + span, label.custom-radio > input:disabled + span {
+      color: #dddddd;
+      cursor: not-allowed; }
+      label.custom-checkbox > input:disabled + span:before, label.custom-radio > input:disabled + span:before {
+        border-color: #dddddd !important;
+        cursor: not-allowed; }
+  label.custom-checkbox > span, label.custom-radio > span {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    line-height: 16px;
+    font-weight: 300;
+    cursor: pointer;
+    padding-left: 22px;
+    width: 100%; }
+    label.custom-checkbox > span:before, label.custom-radio > span:before {
+      cursor: pointer;
+      font-family: fontAwesome;
+      font-weight: 300;
+      font-size: 12px;
+      color: #666666;
+      content: "\a0";
+      background-color: transparent;
+      border: 1px solid #d6d6d6;
+      border-radius: 0;
+      display: inline-block;
+      text-align: center;
+      height: 16px;
+      line-height: 14px;
+      min-width: 16px;
+      margin-right: 6px;
+      position: relative;
+      top: 0;
+      margin-left: -22px;
+      float: left; }
+    label.custom-checkbox > span:hover:before, label.custom-radio > span:hover:before {
+        border-color: #4db1a7;
+    }
+    label.custom-radio > input:checked + span:before {
+      content: "\f111"; } 
+     label.custom-radio > span:before {
+      border-radius: 16px;
+      font-size: 9px; }  
+</style>
+<div class="row">
+    <div class="col-md-9">
+        <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">每日渠道订单添加</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" name="orderForm">
+              <div class="box-body">
+                <div class="form-group" ng-class="{'has-success':!orderForm.orderName.$invalid,'has-warning':orderForm.orderName.$error.required}">
+                    <label class="col-sm-2 control-label">订单名称</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="text"  name="orderName" class="form-control input-sm" placeholder="请输入订单名称" required  ng-model="order.orderName" >
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="help-block" ng-show="orderForm.orderName.$error.required"><i class="fa fa-bell-o"></i>请输入订单名称</span>
+                                <span class="help-block" ng-show="!orderForm.orderName.$invalid"><i class="fa fa-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">订单</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <select name=""  class="form-control input-sm"  ng-model="ocday.orderId" ng-change="channelorderlistfun(ocday.orderId)">
+                                    <option value="">请选择</option>
+                                    <option value="{{order.orderId}}"  ng-repeat="order in orderlist">{{order.orderName}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="col-sm-2 control-label">渠道订单</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <ui-select class="form-control input-sm" multiple ng-model="ocday.ocInfo" theme="bootstrap" ng-disabled="false" sortable="true" close-on-select="false" style="border:1px solid #ccc;">
+                                    <ui-select-match placeholder="选择渠道订单...">{{$item.channelOrderId}}：{{$item.orderName}}---{{$item.channelName}}</ui-select-match>
+                                    <ui-select-choices repeat="(channelorder.orderId+','+channelorder.channelOrderId+','+channelorder.channelId) as channelorder in channelorderlist | propsFilter: {channelOrderId: $select.search,orderName: $select.search,channelName: $select.search}">
+                                        <div ng-bind-html="channelorder.channelOrderId+'：   '+channelorder.orderName+'---'+channelorder.channelName | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>    
+                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">起止时间</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <input type="daterange" name="" class="form-control pull-right active" ng-model="dates4" ranges="ranges" ng-change="show()">
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">选择时间</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <label class="checkbox-inline custom-checkbox nowrap" ng-repeat="item in times">
+                                    <input type="checkbox" name="tfsd2_{{$index}}" ng-model="item.checked" ng-change="updateIsChkAll(item.checked)"/><span>{{item.value}}</span>
+                                </label>
+                                <label class="checkbox-inline custom-checkbox nowrap">
+                                    <input type="checkbox" ng-model="ocday.ischkall" ng-click="reverse(ocday.ischkall)"/><span>全选</span>
+                                </label>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                
+
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">返回列表</button>
+                <button type="button" class="btn btn-info pull-right" ng-click="ok(!userForm.$invalid)" ng-disabled="userForm.$invalid">保存</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+    </div>
+</div>
+<script src="../js/plugins/multi-select/jquery.multi-select.js"></script>
+<script src="../js/plugins/quicksearch/jquery.quicksearch.js"></script>

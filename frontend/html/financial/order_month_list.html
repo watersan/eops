@@ -1,0 +1,99 @@
+<!--订单对账管理  ->  订单对账列表-->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">订单对账管理</h3>
+
+                <div class="box-tools"></div>
+            </div>
+            <div class="clearfix">
+                <div style="float: right; padding:0 15px;">
+
+                    <div has-permission="btn:fos:duizhang:order:history" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <a href="/ordermonthhistorylist"  class="btn btn-success btn-sm" data-reveal-id="add-label-myModal" data-animation="fade" title="历史数据"><i class="fa fa-bar-chart"></i></a>
+                    </div>
+
+                    <div class="input-group input-group-sm" style="width:180px; float: left;margin-right:10px;padding-bottom:10px;">
+                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                        <input type="daterange" name="" class="form-control pull-right active" ng-model="dates4" ranges="ranges">
+                    </div>
+
+                    
+                    <!--<div class="input-group input-group-sm" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="订单名称..." ng-keypress="enter($event)" ng-model="input.parammap.orderName">
+                    </div>-->
+                    <div class="input-group input-group-sm" style="width:180px;padding-bottom:10px;">
+                        <!--<input type="text" class="form-control pull-right" placeholder="产品名称..." ng-keypress="enter($event)" ng-model="input.parammap.productName">-->
+                        <input type="text" class="form-control pull-right" placeholder="订单名称..." ng-keypress="enter($event)" ng-model="input.parammap.orderName">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" ng-click="pageChanged(1)"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /.box-header -->
+            <div ng-switch="tablestatus">
+                <div class="box-body table-responsive no-padding" ng-switch-when="1">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <!-- <th>序号</th> -->
+                                <!-- <th>订单Id</th> -->
+                                <th>订单名称</th>
+                                <!-- <th>产品名称</th> -->
+                                <th>负责人</th>
+                                <th>接入来源</th>
+                                <!-- <th>签约主体</th> -->
+                                <!-- <th>运营数据</th> -->
+                                <th>运营收入</th>
+                                <th style="width:80px">对账数据</th>
+                                <th style="width:80px">对账收入</th>
+                                <th style="width:80px">核减收入</th>
+                                <th style="width:80px">销售返点</th>
+                                <th>开始时间</th>
+                                <th>结束时间</th>
+                                <th>详情</th>
+                                <th class="numeric">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ordermonth in datalist" >
+                                <!-- <td>{{$index+1}}</td> -->
+                                <!-- <td ng-bind="ordermonth.orderId"></td> -->
+                                <td ng-bind="ordermonth.orderName"></td>
+                                <!-- <td ng-bind="ordermonth.productName"></td> -->
+                                <td ng-bind="ordermonth.directorName" ></td>
+                                <td ng-bind="ordermonth.cooperateName"></td>
+                                <!-- <td ng-bind="ordermonth.cpMain|cpMainfilter"></td> -->
+                                <!-- <td ng-bind="ordermonth.oCountSum" ></td> -->
+                                <td ng-bind="ordermonth.oAmountSum|currency : '￥'"></td>
+                                <td><input ng-model="ordermonth.oCount" class="form-control input-sm" style="height:26px;padding:3px 10px;"/></td>
+                                <td><input ng-model="ordermonth.oAmount" class="form-control input-sm" style="height:26px;padding:3px 10px;"/></td>
+                                <td><input ng-model="ordermonth.cut" class="form-control input-sm" style="height:26px;padding:3px 10px;"/></td>
+                                <td><input ng-model="ordermonth.saleRebate" class="form-control input-sm" style="height:26px;padding:3px 10px;"/></td>
+                                <td ng-bind="ordermonth.entryBegintime|date:'yyyy-MM-dd'"></td>
+                                <td ng-bind="ordermonth.entryEndtime|date:'yyyy-MM-dd'"></td>
+                                <th><a class="btn btn-default btn-xs" data-toggle="modal" ng-click="open(ordermonth)">查看</a></th>
+                                <td class="numeric" valign="middle">
+                                    <a href="javascript:;" ng-click="check(ordermonth,false)" class="btn btn-primary btn-xs" has-permission="btn:fos:duizhang:order:duizhang">对账</a>
+                                    <!--<a href="javascript:;" ng-click="check(ordermonth,true)" class="btn btn-primary btn-xs" has-permission="btn:fos:duizhang:order:duizhang">部分对账</a>-->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-body table-responsive no-padding" ng-switch-when="2">
+                    <center style="padding:20px 0;">无数据 .....</center>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="pagesize" max-size="maxSize" rotate="true" ng-change="pageChanged()" boundary-links="true" class="pagination pagination-sm no-margin pull-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                                    last-text="&raquo;"></uib-pagination>
+            </div>
+        </div>
+        <!-- /.box -->
+    </div>
+</div>

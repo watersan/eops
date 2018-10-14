@@ -1,0 +1,115 @@
+<!--系统设置  ->  用户添加-->
+<div class="row">
+    <div class="col-md-9">
+        <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{userop}}</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" name="userForm">
+              <div class="box-body">
+                <div class="form-group" ng-class="{'has-success':!userForm.name.$invalid,'has-warning':userForm.name.$error.required,'has-error':(!userForm.name.$error.required) && userForm.name.$invalid}"> <!--正确 has-success 错误 has-error 预警 has-warning-->
+                  <label class="col-sm-2 control-label">账号</label>
+
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-7">
+                          <input type="text" class="form-control input-sm" name="name" placeholder="请输入账号名" required ng-pattern="/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/" ng-model="user.name">
+                      </div>
+                      <div class="col-sm-4">
+                        <span class="help-block" ng-show="userForm.name.$error.required"><i class="fa fa-bell-o"></i>请输入账号名</span>
+                        <span class="help-block" ng-show="!userForm.name.$invalid"><i class="fa fa-check"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!userForm.fullname.$invalid,'has-warning':userForm.fullname.$error.required,'has-error':(!userForm.fullname.$error.required) && userForm.fullname.$invalid}"> <!--正确 has-success 错误 has-error 预警 has-warning-->
+                  <label class="col-sm-2 control-label">全名</label>
+
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-7">
+                          <input type="text" class="form-control input-sm" name="fullname" placeholder="请输入全名" required ng-model="user.fullname">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!userForm.passwd.$invalid,'has-warning':userForm.passwd.$error.required,'has-error':(!userForm.passwd.$error.required) && userForm.passwd.$invalid}" ng-show="isnew"> <!--正确 has-success 错误 has-error 预警 has-warning-->
+                  <label class="col-sm-2 control-label">密码</label>
+
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-7">
+                        <input type="password" class="form-control input-sm" name="passwd" placeholder="请输入用户密码" required ng-model="user.passwd" ng-show="isnew">
+                      </div>
+                      <div class="col-sm-4">
+                        <span class="help-block" ng-show="userForm.passwd.$error.required"><i class="fa fa-bell-o"></i>请输入用户密码</span>
+                        <span class="help-block" ng-show="!userForm.passwd.$invalid"><i class="fa fa-check"></i></span>
+                        <span class="help-block" ng-show="(!userForm.passwd.$error.required) && userForm.passwd.$invalid"><i class="fa fa-times-circle-o"></i>输入正确格式</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!userForm.passwd.$invalid,'has-warning':userForm.passwd.$error.required,'has-error':(!userForm.passwd.$error.required) && userForm.passwd.$invalid}" ng-show="isnew"> <!--正确 has-success 错误 has-error 预警 has-warning-->
+                  <label class="col-sm-2 control-label">校验</label>
+
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-7">
+                        <input type="password" class="form-control input-sm" name="passwdagain" placeholder="请再次输入密码" required ng-model="passwdagain" ng-show="isnew">
+                      </div>
+                      <div class="col-sm-4">
+                        <span style="color: red" ng-show="userForm.passwd.$valid"><span ng-show="passwdagain!=user.passwd">*两次密码输入不一致</span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':!userForm.mobile.$invalid,'has-warning':userForm.mobile.$error.required,'has-error':(!userForm.mobile.$error.required) && userForm.mobile.$invalid}"> <!--正确 has-success 错误 has-error 预警 has-warning-->
+                  <label class="col-sm-2 control-label">联系电话</label>
+
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-7">
+                        <input type="text" class="form-control input-sm" name="mobile" placeholder="请输入联系电话" ng-pattern="/^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/" required ng-model="user.mobile">
+                      </div>
+                      <div class="col-sm-4">
+                        <span class="help-block" ng-show="userForm.mobile.$error.required"><i class="fa fa-bell-o"></i>请输入联系人电话</span>
+                        <span class="help-block" ng-show="!userForm.mobile.$invalid"><i class="fa fa-check"></i></span>
+                        <span class="help-block" ng-show="(!userForm.mobile.$error.required) && userForm.mobile.$invalid"><i class="fa fa-times-circle-o"></i>输入正确格式</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-success':user.roles.length>0,'has-warning':user.roles.length==0}"> <!--正确 has-success 错误 has-error 预警 has-warning-->
+                  <label class="col-sm-2 control-label">角色</label>
+
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-7">
+                        <div ng-class="newrow($index)" ng-repeat="rolename in rolelist track by $index">
+                          <div class="col-sm-4">
+                            <input type="checkbox" name="{{rolename}}" required ng-checked="isSelected('{{rolename}}')"
+                              ng-click="updateSelection($event,'{{rolename}}')"
+                              value="{{rolename}}" > {{rolename}}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <span class="help-block" ng-show="user.roles.length==0"><i class="fa fa-bell-o"></i>请选择角色</span>
+                        <span class="help-block" ng-show="user.roles.length>0"><i class="fa fa-check"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">返回列表</button>
+                <button type="button" class="btn btn-info pull-right" ng-click="ok(!userForm.$invalid)">保存</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+    </div>
+</div>

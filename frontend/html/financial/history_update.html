@@ -1,0 +1,97 @@
+
+<div style="padding-top:20px;">
+    <div class="portlet box blue">
+        <div class="portlet-title">
+            <div class="caption"><i class=""></i>历史数据修改</div>
+            <div class="tools">
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form action="#" class="form-horizontal" name="historyForm">
+                <div class="control-group">
+                    <label class="control-label">开始时间</label>
+                    <div class="controls">
+                        <input ui-date="dateOptions" ng-disabled=true  class="m-wrap large"   ng-model="history.beginTime" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">结束时间</label>
+                    <div class="controls">
+                        <input ui-date="dateOptions" ng-disabled=true  class="m-wrap large"  ng-model="history.endTime" >
+
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">订单名称</label>
+                    <div class="controls">
+                        <input type="text" ng-disabled=true  class="m-wrap large"  ng-model="history.orderName" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">产品名称</label>
+                    <div class="controls">
+                        <input type="text" ng-disabled=true  class="m-wrap large"   ng-model="history.productName" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">商务负责人</label>
+                    <div class="controls">
+                        <input type="text" ng-disabled=true  class="m-wrap large"   ng-model="history.orderDirectorName" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">是否开票</label>
+                    <div class="controls">
+                        <select name="" class="m-wrap large"  ng-model="history.statusDraw">
+                            <option value="1">是</option>
+                            <option value="2">否</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">票据号</label>
+                    <div class="controls">
+                        <input   class="m-wrap large" placeholder="票据号"   ng-model="history.ticketNum" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">票据金额</label>
+                    <div class="controls">
+                        <input type="number"   class="m-wrap large" placeholder="票据金额"   ng-model="history.money" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">开票日期</label>
+                    <div class="controls">
+                        <input  ui-date="dateOptions"  class="m-wrap large" placeholder="开票日期"   ng-model="history.dataTime" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">是否回款</label>
+                    <div class="controls">
+                        <select name="" class="m-wrap large"  ng-model="history.statusReturn">
+                            <option value="1">是</option>
+                            <option value="2">否</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">回款金额</label>
+                    <div class="controls">
+                        <input type="number"   class="m-wrap large" placeholder="回款金额"   ng-model="history.returnMoney" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">回款日期</label>
+                    <div class="controls">
+                        <input  ui-date="dateOptions"  class="m-wrap large" placeholder="回款日期"   ng-model="history.returnTime" >
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <a href="javascript:void(0); " ng-click="ok()" ng class="btn blue" >保存</a>
+                    <a href="javascript:void(0); " ng-click="cancel()" class="btn blue">返回列表</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

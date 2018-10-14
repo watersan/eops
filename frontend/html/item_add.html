@@ -1,0 +1,83 @@
+<!--配置管理  ->  添加配置项-->
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">添加配置项</h3>
+      </div>
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form class="form-horizontal" name="itemForm">
+        <div class="box-body">
+          <div class="form-group" ng-class="{'has-success':!itemForm.nameid.$invalid,'has-warning':itemForm.nameid.$error.required}">
+            <!--正确 has-success 错误 has-error 预警 has-warning-->
+            <label class="col-sm-2 control-label">名称ID</label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-sm-7">
+                    <input type="text" class="form-control input-sm" name="nameid" placeholder="名称ID" required ng-pattern="/[a-zA-Z]\w{3,}/" ng-model="item.nameid">
+                </div>
+                <div class="col-sm-4">
+                  <span class="help-block" ng-show="itemForm.nameid.$error.required"><i class="fa fa-bell-o"></i>请输入配置项的名称ID</span>
+                  <span class="help-block" ng-show="!itemForm.nameid.$invalid"><i class="fa fa-check"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':!itemForm.name.$invalid,'has-warning':itemForm.name.$error.required}">
+            <label class="col-sm-2 control-label">名称</label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-sm-7">
+                  <input type="text" class="form-control input-sm" name="name" placeholder="名称" required ng-pattern="/.{2,}/" ng-model="item.name">
+                </div>
+                <div class="col-sm-4">
+                  <span class="help-block" ng-show="itemForm.name.$error.required"><i class="fa fa-bell-o"></i>请输入配置项的名称</span>
+                  <span class="help-block" ng-show="!itemForm.name.$invalid"><i class="fa fa-check"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">类型</label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-xs-2 col-xs-4">
+                  <select class="form-control" name="itemtype" ng-model="item.type">
+                    <option value="table">表</option>
+                    <option value="subset">子集</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':!itemForm.itemdesc.$error.maxlength,
+            'has-warning':itemForm.itemdesc.$error.maxlength}">
+            <label class="col-sm-2 control-label">描述</label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-xs-7">
+                  <textarea class="form-control" name="itemdesc" ng-model="item.desc" ng-maxlength="200">
+                  </textarea>
+                </div>
+                <div class="col-sm-4">
+                  <span class="help-block" ng-show="itemForm.itemdesc.$error.maxlength">
+                    <i class="fa fa-bell-o"></i>请输入不超过200字的描述
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--
+          <input type="hidden" class="form-control input-sm" ng-model="item.step" value="1">
+        -->
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <button type="button" class="btn btn-default" ng-click="cancel()">返回列表</button>
+          <button type="button" class="btn btn-info pull-right" ng-click="next(!itemForm.$invalid)">下一步</button>
+        </div>
+        <!-- /.box-footer -->
+      </form>
+    </div>
+  </div>
+</div>

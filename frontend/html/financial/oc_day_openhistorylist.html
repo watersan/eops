@@ -1,0 +1,79 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
+      <i class="fa fa-times"></i>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">详情</h4>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive">
+      <table class="table" data-hide='{{value|json}}'>
+        <tbody>
+          <tr>
+            <th style="width:20%;">待录时间</th>
+            <td ng-bind="$resolve.value.entryTime | date:'yyyy-MM-dd'"></td>
+          </tr>
+          <tr>
+            <th>渠道订单Id</th>
+            <td ng-bind="$resolve.value.channelOrderId"></td>
+          </tr>
+          <tr>
+            <th>订单Id</th>
+            <td ng-bind="$resolve.value.orderId"></td>
+          </tr>
+          <tr>
+            <th>订单名称</th>
+            <td ng-bind="$resolve.value.orderName"></td>
+          </tr>
+          <tr>
+            <th>渠道简称</th>
+            <td ng-bind="$resolve.value.channelName"></td>
+          </tr>
+          <tr>
+            <th>产品名称</th>
+            <td ng-bind="$resolve.value.productName"></td>
+          </tr>
+          <tr>
+            <th>商务负责人</th>
+            <td ng-bind="$resolve.value.orderDirectorName"></td>
+          </tr>
+          <tr>
+            <th>接入单价</th>
+            <td ng-bind="$resolve.value.payUnit|currency : '￥'"></td>
+          </tr>
+          <tr>
+            <th>订单数量</th>
+            <td ng-bind="$resolve.value.oCount"></td>
+          </tr>
+          <tr>
+            <th>订单金额</th>
+            <td ng-bind="$resolve.value.oAmount|currency : '￥'"></td>
+          </tr>
+          <tr>
+            <th>渠道Id</th>
+            <td ng-bind="$resolve.value.channelId"></td>
+          </tr>
+          <tr>
+            <th>渠道负责人</th>
+            <td ng-bind="$resolve.value.channelDirectorName"></td>
+          </tr>
+          <tr>
+            <th>外放单价</th>
+            <td ng-bind="$resolve.value.outerUnit|currency : '￥'"></td>
+          </tr>
+          <tr>
+            <th>渠道数量</th>
+            <td ng-bind="$resolve.value.cCount"></td>
+          </tr>
+          <tr>
+            <th>渠道金额</th>
+            <td ng-bind="$resolve.value.cAmount|currency : '￥'"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="$dismiss()">关闭</button>
+  </div>
+</div>

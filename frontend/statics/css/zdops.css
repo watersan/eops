@@ -1,0 +1,14 @@
+.zdops-menu-item:hover{background-color: #B1B1B1;}
+
+.zdops-menu-item-text {
+margin-top: 2px;
+margin-left: 10px;
+margin-bottom: 2px;
+#cursor: pointer;
+}
+.ui-autocomplete {
+    max-height: 100px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+}

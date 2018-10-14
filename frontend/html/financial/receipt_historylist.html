@@ -1,0 +1,227 @@
+<!--收款管理  ->  收款历史列表-->
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">收款历史</h3>
+                <div class="box-tools"></div>
+            </div>
+            <div class="clearfix">
+                <div style="float: right; padding:0 15px;">
+                
+                    <div style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <select style="width: auto;padding:4px 12px;height:auto;" class="form-control" required ng-model="input.parammap.extendType" >
+                            <option value="">推广类型...</option>
+                            <option value="1">CPC</option>
+                            <option value="2">CPA</option>
+                            <option value="3">CPT</option>
+                            <option value="4">冲榜</option>
+                            <option value="5">CPD</option>
+                            <option value="6">快速任务</option>
+                            <option value="7">ASO</option>
+                            <option value="8">CPS</option>
+                        </select>
+                    </div>
+                    <div style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <select style="width: auto;padding:4px 12px;height:auto;" class="form-control" required ng-model="input.parammap.status" >
+                            <option value="">结算状态...</option>
+                            <option value="1">已结算</option>
+                            <option value="0">未结算</option>
+                        </select>
+                    </div>
+
+                    <div style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <select style="width: auto;padding:4px 12px;height:auto;" class="form-control" required ng-model="input.parammap.directorName">
+                            <option value="">商务人员...</option>
+                            <option value="{{user.trueName}}({{user.id}})" ng-bind="user.trueName" ng-repeat="user in userlist"></option>
+                        </select>
+                    </div>
+
+                    <div class="input-group input-group-sm" style="width:180px; float: left;margin-right:10px;padding-bottom:10px;">
+                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                        <input type="daterange" name="" class="form-control pull-right active" ng-model="dates4" ranges="ranges">
+                    </div>
+
+                    <div class="input-group-sm" style="width:190px; float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" placeholder="公司抬头..." ng-keypress="enter($event)" ng-model="input.parammap.company" class="form-control">
+                    </div>
+                    <div class="input-group input-group-sm" style="width:190px; float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" placeholder="订单名称..." ng-keypress="enter($event)" ng-model="input.parammap.orderName" class="form-control">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" ng-click="pageChanged(1)"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                   <!-- <div class="input-group input-group-sm" style="width:220px;float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" placeholder="产品名称..." ng-keypress="enter($event)" ng-model="input.parammap.productName" class="form-control">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" ng-click="pageChanged(1)"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>-->
+
+                    <div class="input-group-btn" has-permission="btn:fos:finance:draw:chupiaohistory:shoukuanhistory:export" style="float: left;padding-bottom:10px;">
+
+                        <form action={{urlexport}} method="post" >
+                             <!--<form action=http://192.168.1.31:8081/adv-business-service/order/exportDrawHistoryList method="post">-->
+                            <input class="form-control input-sm"  name="orderName" value="{{input.parammap.orderName}}" type="hidden">
+                            <input class="form-control input-sm" name="productName" value="{{input.parammap.productName}}"  type="hidden">
+                            <input class="form-control input-sm" name="company" value="{{input.parammap.company}}"  type="hidden">
+                            <input class="form-control input-sm" name="directorName" value="{{input.parammap.directorName}}"  type="hidden">
+                            <input class="form-control input-sm" name="entryBegintime" value="{{input.parammap.entryBegintime}}"  type="hidden">
+                            <input class="form-control input-sm" name="entryEndtime" value="{{input.parammap.entryEndtime}}"  type="hidden">
+                            <input class="form-control input-sm" name="pageNo" value="1"  type="hidden">
+                            <input class="form-control input-sm" name="pageSize" value="-1" type="hidden">
+                            <input class="form-control input-sm" name="status" value="{{input.parammap.status}}" type="hidden">
+                            <button type="submit" class="btn btn-primary btn-sm" ng-show="tablestatus == 1" >导出</button>
+                                 <span class="btn btn-primary btn-sm" ng-show="tablestatus != 1" disabled=true>导出</span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box bg-aqua">
+                    <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">应收金额</span>
+                      <span class="info-box-number" ng-bind="sum.subOAmount|currency : '￥'"></span>
+
+                      <div class="progress">
+                        <div class="progress-bar"></div>
+                      </div>
+                          <span class="progress-description"></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box bg-green">
+                    <span class="info-box-icon"><i class="fa fa-star-o"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">票面金额</span>
+                      <span class="info-box-number" ng-bind="sum.money|currency : '￥'"></span>
+
+                      <div class="progress">
+                        <div class="progress-bar"></div>
+                      </div>
+                          <span class="progress-description"></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box bg-yellow">
+                    <span class="info-box-icon"><i class="fa fa-exclamation"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">核减金额</span>
+                      <span class="info-box-number" ng-bind="sum.cut|currency : '￥'"></span>
+
+                      <div class="progress">
+                        <div class="progress-bar"></div>
+                      </div>
+                          <span class="progress-description"></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box bg-red">
+                    <span class="info-box-icon"><i class="fa fa-lightbulb-o"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">收款金额</span>
+                      <span class="info-box-number" ng-bind="sum.returnMoney|currency : '￥'"></span>
+
+                      <div class="progress">
+                        <div class="progress-bar"></div>
+                      </div>
+                          <span class="progress-description"></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+              </div>
+
+            <div ng-switch="tablestatus">
+                <div class="box-body table-responsive no-padding" ng-switch-when="1">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <!-- <th>序号</th> -->
+                                <!-- <th>订单Id</th> -->
+                                <th>订单名称</th>
+                                <!-- <th>产品名称</th> -->
+                                <th>负责人</th>
+                                <th>投放类型</th>
+                                <th>应收金额</th>
+                                <!-- <th>票据号</th> -->
+                                <th>公司抬头</th>
+                                <th>开票单位</th>
+                                <th>票面金额</th>
+                                <th>核减金额</th>
+                                <th>开票日期</th>
+                                <th>状态</th>
+                                <!--<th>是否索要发票</th>-->
+                                <!-- <th>票据开始时间</th> -->
+                                <!-- <th>票据结束时间</th> -->
+                                <th>收款金额</th>
+                                <th>收款日期</th>
+                                <th>详情</th>
+                               <!-- <th class="numeric">操作</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ticketorder in datalist" >
+                                <!-- <td>{{$index+1}}</td> -->
+                                <!-- <td ng-bind="ticketorder.orderId"></td> -->
+                                <td ng-bind="ticketorder.orderName"></td>
+                                <!-- <td ng-bind="ticketorder.productName"></td> -->
+                                <td ng-bind="ticketorder.directorName"></td>
+                                <td ng-bind="ticketorder.extendType|extendTypefilter"></td>
+                                <td ng-bind="ticketorder.subOAmount|currency : '￥'"></td>
+                                <!-- <td ng-bind="ticketorder.ticketNum"></td> -->
+                                <td ng-bind="ticketorder.company"></td>
+                                <td ng-bind="ticketorder.cpMain|cpMainfilter:ticketorder.cpMain"></td>
+                                <td ng-bind="ticketorder.money|currency : '￥'"></td>
+                                <td ng-bind="ticketorder.cut|currency : '￥'"></td>
+                                <td ng-bind="ticketorder.dataTime|date:'yyyy-MM-dd'"></td>
+                                <td ng-bind="ticketorder.status|ticketStatusfilter:ticketorder.status" ></td>
+                                <!-- <td ng-bind="ticketorder.isCashierTicket|isCashierTicketfilter:ticketorder.isCashierTicket"></td>-->
+                                <!-- <td ng-bind="ticketorder.ticketBegintime|date:'yyyy-MM-dd'"></td> -->
+                                <!-- <td ng-bind="ticketorder.ticketEndtime|date:'yyyy-MM-dd'"></td> -->
+                                <td ng-bind="ticketorder.returnMoney|currency : '￥'"></td>
+                                <td ng-bind="ticketorder.returnDate|date:'yyyy-MM-dd'"></td>
+                                <td><a class="btn btn-default btn-xs" data-toggle="modal" ng-click="open(ticketorder)">查看</a></td>
+                               <!-- <td class="numeric" valign="middle"><a href="javascript:;" ng-click=" receipt(ticketorder)" >收款</a></td>-->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-body table-responsive no-padding" ng-switch-when="2">
+                    <center style="padding:20px 0;">无数据 .....</center>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="pagesize" max-size="maxSize" rotate="true" ng-change="pageChanged()" boundary-links="true" class="pagination pagination-sm no-margin pull-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                                    last-text="&raquo;"></uib-pagination>
+            </div>
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+

@@ -1,0 +1,39 @@
+.node{background-color: white; text-align: center; vertical-align: middle; position: absolute; cursor: pointer;
+ z-index: 10;
+ -webkit-user-select: none; -moz-user-select:none; border: 1px solid #ccc; font-size: 12px; }
+.node-container{width: 100%; height: 100%; display: table; }
+.topology-container{position: relative;}
+.node-container span{word-break: break-all; text-align: center; word-wrap: break-word; display: table-cell; vertical-align: middle; }
+.topology-container svg{position: absolute; }
+.none{display: none; }
+.
+.node-selected{background: #969494; }
+.bor-rad-tl{border-top-left-radius:4px;}
+.bor-rad-tr{border-top-right-radius:4px;}
+.bor-rad-bl{border-bottom-left-radius:4px;}
+.bor-rad-br{border-bottom-right-radius:4px;}
+.popover-content,.popover.fade.top.in{width: 180px; }
+.node{
+    border-radius: 4px;
+    font-size: 12px;
+}
+.warning{
+    background-color: #f0a63a !important;
+    border-color: #f0a63a !important;
+    color: #fff;
+}
+.info{
+    background-color: #4A9BFF !important;
+    border-color: #4A9BFF !important;
+    color: #fff;
+}
+.success{
+    background-color: #46C37B !important;
+    border-color: #46C37B !important;
+    color: #fff;
+}
+.danger{
+    background-color: #c94d3c !important;
+    border-color: #c94d3c !important;
+    color: #fff;
+}

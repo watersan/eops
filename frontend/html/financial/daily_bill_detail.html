@@ -1,0 +1,201 @@
+<!--财务对账  ->  日账单查询详情-->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">日账单查询详情</h3>
+
+                <div class="box-tools"></div>
+                    
+            </div>
+            <div class="clearfix">
+                <div style="float: right; padding:0 15px;">
+
+                    <div class="input-group input-group-sm" style="width:180px; float: left;margin-right:10px;padding-bottom:10px;">
+                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                        <input type="daterange" name="" class="form-control pull-right active" ng-model="dates4" ranges="ranges">
+                    </div>
+
+                    <div style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <select style="width: auto;padding:4px 12px;height:auto;" class="form-control" required ng-model="input.parammap.orderMonthStatus">
+                            <option value="">订单状态</option>
+                            <option value="1">未对账</option>
+                            <option value="0">已对账</option>
+                        </select>
+                    </div>
+                    <div style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <select style="width: auto;padding:4px 12px;height:auto;" class="form-control" required ng-model="input.parammap.channelMonthStatus">
+                            <option value="">渠道状态</option>
+                            <option value="1">未对账</option>
+                            <option value="0">已对账</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group input-group-sm" style="width:160px;float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" ng-show="{{flag}} == 1002" placeholder="订单名称..." ng-keypress="enter($event)" ng-model="input.parammap.orderName">
+                        <input type="text" class="form-control pull-right" ng-show="{{flag}} == 1001" placeholder="渠道名称..." ng-keypress="enter($event)" ng-model="input.parammap.channelName">
+                        <input type="text" class="form-control pull-right" ng-show="{{flag}} == 1003" placeholder="订单名称..." ng-keypress="enter($event)" ng-model="input.parammap.orderName">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" ng-click="pageChanged(1)"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box bg-aqua">
+                    <span class="info-box-icon"><i class="fa fa-road"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">订单数量</span>
+                      <span class="info-box-number" ng-bind="fixtozero(sum.oCount)"></span>
+
+                      <div class="progress">
+                        <div class="progress-bar"></div>
+                      </div>
+                          <span class="progress-description"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box bg-green">
+                    <span class="info-box-icon"><i class="fa fa-flask"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">订单金额</span>
+                      <span class="info-box-number" ng-bind="fixtozero(sum.oAmount)|currency : '￥'"></span>
+
+                      <div class="progress">
+                        <div class="progress-bar"></div>
+                      </div>
+                          <span class="progress-description"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box bg-yellow">
+                    <span class="info-box-icon"><i class="fa fa-pie-chart"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">渠道数量</span>
+                      <span class="info-box-number" ng-bind="fixtozero(sum.cCount)"></span>
+
+                      <div class="progress">
+                        <div class="progress-bar"></div>
+                      </div>
+                          <span class="progress-description"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box bg-red">
+                    <span class="info-box-icon"><i class="fa fa-leaf"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">渠道金额</span>
+                      <span class="info-box-number" ng-bind="fixtozero(sum.cAmount) |currency : '￥'"></span>
+
+                      <div class="progress">
+                        <div class="progress-bar"></div>
+                      </div>
+                          <span class="progress-description"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box bg-maroon">
+                    <span class="info-box-icon"><i class="fa fa-signal"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">利润</span>
+                      <span class="info-box-number" ng-bind="fixtozero(sum.profit) |currency : '￥'"></span>
+
+                      <div class="progress">
+                        <div class="progress-bar"></div>
+                      </div>
+                          <span class="progress-description"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box bg-fuchsia">
+                    <span class="info-box-icon"><i class="fa  fa-tachometer"></i></span>
+
+                    <div class="info-box-content">
+                      <span class="info-box-text">利润率</span>
+                      <span class="info-box-number" ng-bind="(fixtozero(sum.profitMargin)*100|number:2)+'%'"></span>
+
+                      <div class="progress">
+                        <div class="progress-bar"></div>
+                      </div>
+                          <span class="progress-description"></span>
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+            
+            <!-- /.box-header -->
+            <div ng-switch="tablestatus">
+                <div class="box-body table-responsive no-padding" ng-switch-when="1">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th ng-show="{{flag}} == 1001 || {{flag}} == 1003">渠道Id</th>
+                                <th ng-show="{{flag}} == 1001 || {{flag}} == 1002 || {{flag}} == 1003">渠道简称</th>
+                                <th ng-show="{{flag}} == 1001 || {{flag}} == 1003">渠道负责人</th>
+                                <th ng-show="{{flag}} == 1002 || {{flag}} == 1003">订单Id</th>
+                                <th ng-show="{{flag}} == 1001 || {{flag}} == 1002 || {{flag}} == 1003">订单名称</th>
+                                <th ng-show="{{flag}} == 1002 || {{flag}} == 1003">产品名称</th>
+                                <th ng-show="{{flag}} == 1002 || {{flag}} == 1003">商务负责人</th>
+                                <th>订单数量</th>
+                                <th>订单金额</th>
+                                <th>渠道数量</th>
+                                <th>渠道金额</th>
+                                <th>利润</th>
+                                <th>利润率</th>
+                                <!--<th class="numeric">操作</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="dailybill in datalist">
+                                <td ng-show="{{flag}} == 1001 || {{flag}} == 1003" ng-bind="dailybill.channelId"></td>
+                                <td ng-show="{{flag}} == 1001 || {{flag}} == 1002 || {{flag}} == 1003" ng-bind="dailybill.channelName"></td>
+                                <td ng-show="{{flag}} == 1001 || {{flag}} == 1003" ng-bind="dailybill.channelDirectorName"></td>
+                                <td ng-show="{{flag}} == 1002 || {{flag}} == 1003" ng-bind="dailybill.orderId"></td>
+                                <td ng-show="{{flag}} == 1001 || {{flag}} == 1002 || {{flag}} == 1003" ng-bind="dailybill.orderName"></td>
+                                <td ng-show="{{flag}} == 1002 || {{flag}} == 1003" ng-bind="dailybill.productName"></td>
+                                <td ng-show="{{flag}} == 1002 || {{flag}} == 1003" ng-bind="dailybill.orderDirectorName"></td>
+                                <td ng-bind="dailybill.oCount"></td>
+                                <td ng-bind="dailybill.oAmount|currency : '￥'"></td>
+                                <td ng-bind="dailybill.cCount"></td>
+                                <td ng-bind="dailybill.cAmount|currency : '￥'"></td>
+                                <td ng-bind="dailybill.profit |currency : '￥'"></td>
+                                <td ng-bind="(dailybill.profitMargin*100|number:2)+'%'"></td>
+
+                               <!-- <td class="numeric" valign="middle" ><a  href="/dailybilldetail/{{dailybill.orderId}}" class="btn btn-default btn-xs">详情</a></td>-->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-body table-responsive no-padding" ng-switch-when="2">
+                    <center style="padding:20px 0;">无数据 .....</center>  
+                </div>
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer clearfix">
+                <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="pagesize" max-size="maxSize" rotate="true" ng-change="pageChanged()" boundary-links="true" class="pagination pagination-sm no-margin pull-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                                    last-text="&raquo;"></uib-pagination>                
+            </div>
+        </div>
+        <!-- /.box -->
+    </div>
+</div>

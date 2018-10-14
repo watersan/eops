@@ -1,0 +1,143 @@
+<!--出票管理  ->  出票历史列表-->
+
+<!--收款操作-->
+    <script type="text/ng-template" id="draw_receipt.html">
+        <div id="update_tag" class="middle-box text-center loginscreen animated fadeInDown">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">收款操作</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">收款金额</label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <input type="number" class="form-control input-sm"  ng-model="ticketorder.returnMoney"/>
+                                    </div>
+                                    <div class="col-sm-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">收款日期</label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control input-sm" required uib-datepicker-popup ng-model="ticketorder.returnDate"
+                                       is-open="popup1.opened" datepicker-options="dateOptions1" ng-required="true"
+                                       close-text="关闭" clear-text="清除" current-text="今天" ng-click="open(popup1)"/>
+                                        <!-- <input ui-date="dateOptions" class="form-control input-sm" required  ng-model="ticketorder.returnDate"> -->
+                                    </div>
+                                    <div class="col-sm-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" ng-click="ok()">收款</button>
+                    <button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+                </div>
+            </div>
+        </div>
+    </script>
+<!--收款操作 end-->
+
+
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">出票历史</h3>
+
+                <div class="box-tools"></div>
+            </div>
+            <div class="clearfix">
+                <div style="float: right; padding:0 15px;">
+
+                    <div has-permission="btn:fos:finance:draw:chupiaohistory:shoukuanhistory" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <a href="/receipthistorylist" class="btn btn-warning btn-sm" data-reveal-id="add-label-myModal" data-animation="fade" title="收款历史"><i class="fa fa-retweet"></i></a>
+                    </div>
+
+                    <div class="input-group input-group-sm" style="float: left;margin-right:10px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="订单名称..." ng-keypress="enter($event)" ng-model="input.parammap.orderName">
+                    </div>
+                    <div class="input-group input-group-sm" style="width:180px;padding-bottom:10px;">
+                        <input type="text" class="form-control pull-right" placeholder="产品名称..." ng-keypress="enter($event)" ng-model="input.parammap.productName">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" ng-click="pageChanged(1)"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /.box-header -->
+            <div ng-switch="tablestatus">
+                <div class="box-body table-responsive no-padding" ng-switch-when="1">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <!-- <th>序号</th> -->
+                                <!-- <th>订单Id</th> -->
+                                <th>订单名称</th>
+                                <!-- <th>产品名称</th> -->
+                                <!-- <th>票据号</th> -->
+                                <th>公司抬头</th>
+                                <th>开票单位</th>
+                                <th>票面金额</th>
+                                <th>核减金额</th>
+                                <!-- <th>预收款金额</th> -->
+                                <th>开票日期</th>
+                                <th>结算状态</th>
+                                <!-- <th>是否索要发票</th> -->
+                                <th>票据开始时间</th>
+                                <th>票据结束时间</th>
+                                <th>详情</th>
+                                <th class="numeric">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ticketorder in datalist" >
+                                <!-- <td>{{$index+1}}</td> -->
+                                <!-- <td ng-bind="ticketorder.orderId"></td> -->
+                                <td ng-bind="ticketorder.orderName"></td>
+                                <!-- <td ng-bind="ticketorder.productName"></td> -->
+                                <!-- <td ng-bind="ticketorder.ticketNum"></td> -->
+                                <td ng-bind="ticketorder.company"></td>
+                                <td ng-bind="ticketorder.cpMain|cpMainfilter:ticketorder.cpMain"></td>
+                                <td ng-bind="ticketorder.money|currency : '￥'"></td>
+                                <td ng-bind="ticketorder.cut|currency : '￥'"></td>
+                                <!-- <td ng-bind="ticketorder.advancePay|currency : '￥'"></td> -->
+                                <td ng-bind="ticketorder.dataTime|date:'yyyy-MM-dd'"></td>
+                                <td ng-bind="ticketorder.status|ticketStatusfilter:ticketorder.status" ></td>
+                                <!-- <td ng-bind="ticketorder.isCashierTicket|isCashierTicketfilter:ticketorder.isCashierTicket"></td> -->
+                                <td ng-bind="ticketorder.ticketBegintime|date:'yyyy-MM-dd'"></td>
+                                <td ng-bind="ticketorder.ticketEndtime|date:'yyyy-MM-dd'"></td>
+                                <td><a class="btn btn-default btn-xs" data-toggle="modal" ng-click="open(ticketorder)">查看</a></th>
+                                <td ng-switch="ticketorder.status" class="numeric" valign="middle">
+                                    <a ng-switch-when="0" href="javascript:;" class="btn btn-warning btn-xs" ng-click=" receipt(ticketorder)" has-permission="btn:fos:finance:draw:chupiaohistory:shoukuan">收款</a>
+                                    <a ng-switch-when="1" href="javascript:;" class="btn btn-warning btn-xs disabled">已收款</a>
+                                    <a  href="/drawhistoryupdate/{{ticketorder.id}}" class="btn btn-primary btn-xs" has-permission="btn:fos:finance:draw:chupiaohistory:update">修改</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-body table-responsive no-padding" ng-switch-when="2">
+                    <center style="padding:20px 0;">无数据 .....</center>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="pagesize" max-size="maxSize" rotate="true" ng-change="pageChanged()" boundary-links="true" class="pagination pagination-sm no-margin pull-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                                    last-text="&raquo;"></uib-pagination>                                     
+            </div>
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
